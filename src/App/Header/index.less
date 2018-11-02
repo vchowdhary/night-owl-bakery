@@ -3,10 +3,7 @@
 @height-header: 4 * @spacing-y;
 
 .logo {
-    display: flex;
     flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
 
     @font-size-logo: @font-size * 1.5;
 
@@ -59,18 +56,24 @@
 
     > * {
         display: flex;
-    }
+        align-items: center;
 
-    > .start {
-        justify-content: flex-start;
-    }
+        > a {
+            display: flex;
+            align-items: center;
+        }
 
-    > .center {
-        justify-content: center;
-    }
+        > *:not(:first-child) {
+            margin-inline-start: @spacing-x;
+        }
 
-    > .end {
-        justify-content: flex-end;
+        &:first-child {
+            justify-content: flex-start;
+        }
+
+        &:last-child {
+            justify-content: flex-end;
+        }
     }
 }
 

@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import Octicon, { Plus } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 import LoginLink from 'src/Login/Link';
@@ -41,6 +42,10 @@ function Logo() {
 function Account() {
     if (!User.loggedIn) {
         return <nav>
+            <Link to="/signup/">
+                <Octicon icon={Plus} />
+                &nbsp;Sign up
+            </Link>
             <LoginLink />
         </nav>;
     }
@@ -59,14 +64,8 @@ function Account() {
  */
 function Header() {
     return <header className={styles.header}>
-        <section className={styles.start}>
-            <Logo />
-        </section>
-        <section className={styles.center}>
-        </section>
-        <section className={styles.end}>
-            <Account />
-        </section>
+        <Logo />
+        <Account />
     </header>;
 }
 

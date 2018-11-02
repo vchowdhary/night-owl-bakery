@@ -23,8 +23,8 @@ function LoginLink() {
         activeClassName={styles.active}
         to={User.paths.login}
     >
-        Log in&nbsp;
         <Octicon icon={SignIn} />
+        &nbsp;Log in
     </NavLink>;
 }
 
