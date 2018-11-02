@@ -1,7 +1,7 @@
 /**
  * App header.
  *
- * @module src/Header
+ * @module src/App/Header
  */
 
 import React from 'react';

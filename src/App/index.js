@@ -6,11 +6,20 @@
 
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Header from 'src/Header';
+import asyncComponent from 'src/async-component';
+import Spinner from 'src/Spinner';
+import User from 'src/User';
+
+import AsyncNotFound from 'bundle-loader?lazy!./NotFound';
+import AsyncLogin from 'bundle-loader?lazy!./Login';
+import Header from './Header';
 
 import styles from './index.less';
+
+const Login = asyncComponent(AsyncLogin, Spinner);
+const NotFound = asyncComponent(AsyncNotFound, Spinner);
 
 /**
  * App root component.
@@ -24,6 +33,10 @@ function App() {
         <div className={styles.app}>
             <Header />
             <main>
+                <Switch>
+                    <Route path={User.paths.login} component={Login} />
+                    <Route component={NotFound} />
+                </Switch>
             </main>
         </div>
     </BrowserRouter>;

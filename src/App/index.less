@@ -110,5 +110,18 @@ fieldset {
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
+
+    > main {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+
+        width: 100%;
+        max-width: @width-container-max;
+
+        margin: @spacing-y auto;
+        padding: 0 @spacing-x;
+        box-sizing: border-box;
+    }
 }
 
