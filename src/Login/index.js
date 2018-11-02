@@ -61,10 +61,6 @@ export default class Login extends React.Component {
         const { location, prompt = 'Log in' } = this.props;
         const { loading, redirect, message } = this.state;
 
-        if (loading) {
-            return <Spinner />;
-        }
-
         if (redirect) {
             const { referer } = location.state || {
                 referer: { pathname: '/' }
@@ -72,29 +68,43 @@ export default class Login extends React.Component {
             return <Redirect to={referer} />;
         }
 
-        return <form className={styles.login} onSubmit={event => {
-            event.preventDefault();
+        return <form
+            className={styles.login}
+            onClick={event => {
+                event.stopPropagation();
+            }}
+            onSubmit={async(event) => {
+                event.preventDefault();
 
-            const { username, password } = this.inputs;
-            const usernameValue = username.value;
-            const passwordValue = password.value;
-            password.value = '';
+                const { username, password } = this.inputs;
+                const usernameValue = username.value;
+                const passwordValue = password.value;
+                password.value = '';
 
-            this.login(usernameValue, passwordValue);
-        }}>
+                this.setState({ loading: true });
+                await this.login(usernameValue, passwordValue);
+                this.setState({ loading: false });
+            }}
+        >
+            {loading ? <Spinner /> : null}
             <input
                 type='username'
                 ref={input => (this.inputs.username = input)}
                 placeholder='Username'
                 required={true}
+                disabled={loading}
             />
             <input
                 type='password'
                 ref={input => (this.inputs.password = input)}
                 placeholder='Password'
                 required={true}
+                disabled={loading}
             />
-            <button type='submit'>
+            <button
+                type='submit'
+                disabled={loading}
+            >
                 {prompt}
             </button>
             {message}

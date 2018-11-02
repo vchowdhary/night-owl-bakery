@@ -7,13 +7,16 @@
 import React from 'react';
 import { string, node } from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
-import Octicon, { SignIn, Plus, Person } from '@githubprimer/octicons-react';
+import Octicon, { Plus, Person } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
+import Login from 'src/Login';
 import Logout from 'src/Logout';
 import DropdownNav from './DropdownNav';
 
 import styles from './index.less';
+
+const LoginWithRouter = withRouter(Login);
 
 /**
  * Button-based link component.
@@ -79,10 +82,7 @@ function Account() {
         ];
     } else {
         menu = [
-            <ButtonLink key="login" to="/login/">
-                <Octicon icon={SignIn} />
-                &nbsp;Log in
-            </ButtonLink>,
+            <LoginWithRouter key="login" />,
             <ButtonLink key="signup" to="/signup/">
                 <Octicon icon={Plus} />
                 &nbsp;Sign up
@@ -90,8 +90,8 @@ function Account() {
         ];
     }
 
-    return <nav>
-        <DropdownNav title={title}>
+    return <nav className={styles.account}>
+        <DropdownNav menuClassName={styles.menu} title={title}>
             {menu}
         </DropdownNav>
     </nav>;

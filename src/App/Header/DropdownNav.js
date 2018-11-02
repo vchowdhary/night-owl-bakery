@@ -68,13 +68,17 @@ DropdownButton.propTypes = {
  * @alias module:src/App/Header/DropdownNav
  *
  * @param {Object} props - The component's props.
+ * @param {string} props.className - The top-level dropdown class name.
+ * @param {string} props.menuClassName - The dropdown menu's class name.
  * @param {ReactNode} props.title - The title for the dropdown.
  * @param {ReactNode} props.children - The dropdown items.
  * @returns {ReactElement} The component's elements.
  */
 function DropdownNav(props) {
-    const { title, children } = props;
+    const { className, menuClassName, title, children } = props;
     const { enter, enterActive, exit, exitActive } = styles;
+
+    const menuClasses = classNames(styles.menu, menuClassName);
 
     /**
      * Dropdown menu.
@@ -84,13 +88,15 @@ function DropdownNav(props) {
      * @returns {ReactElement} The component's elements.
      */
     function Menu() {
-        return <div className={styles.menu}>
+        return <div className={menuClasses}>
             {children}
         </div>;
     }
 
+    const classes = classNames(styles.dropdown, className);
+
     return <Dropdown
-        className={styles.dropdown}
+        className={classes}
         button={<DropdownButton to='/account/' title={title} />}
         transition={{
             appear: true,
@@ -107,6 +113,8 @@ function DropdownNav(props) {
 }
 
 DropdownNav.propTypes = {
+    className: string,
+    menuClassName: string,
     title: node.isRequired,
     children: node.isRequired
 };
