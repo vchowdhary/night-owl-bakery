@@ -15,12 +15,19 @@ This repository contains the Night Owl Bakery on-demand work app.
 ## Usage
 
 ```sh
-npm start -- [config]
+npm start -- <config>
 ```
 
 The configuration can be either a JSON file or a JavaScript module that exports
 the configuration object. See documentation for more details.
 
+The minimum required config looks like:
+```json
+{
+    "dataPath": "/path/to/data/directory",
+    "cookieSecret": "some random secret string"
+}
+```
 
 ## Development
 
@@ -61,7 +68,8 @@ To run development scripts, use `npm run <script>`. Available scripts include:
 
 - `doc-lib`: Generates documentation for `lib/` into `doc/lib`.
 - `doc-src`: Generates documentation for `src/` into `doc/src`.
-- `dev`: Starts a live-reloading development server.
+- `dev <config>`: Starts a live-reloading development server.
+    - A configuration file must be specified; see above.
 - `dist`: Performs a single production build into `dist/`.
 - `lint`: Lints the codebase.
 
