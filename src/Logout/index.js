@@ -1,12 +1,13 @@
 /**
  * Logout button.
  *
- * @module src/App/Logout
+ * @module src/Logout
  */
 
 import React from 'react';
-import { shape, func, element } from 'prop-types';
+import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import Octicon, { SignOut } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 
@@ -15,7 +16,7 @@ import styles from './index.less';
 /**
  * Logout React component.
  *
- * @alias module:src/App/Logout
+ * @alias module:src/Logout
  */
 class Logout extends React.PureComponent {
     /**
@@ -24,14 +25,13 @@ class Logout extends React.PureComponent {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { prompt = 'Log out' } = this.props;
-
         return <form className={styles.logout} onSubmit={event => {
             event.preventDefault();
             this.logout();
         }}>
             <button type='submit' disabled={!User.loggedIn}>
-                {prompt}
+                Log out&nbsp;
+                <Octicon icon={SignOut} />
             </button>
         </form>;
     }
@@ -60,8 +60,7 @@ class Logout extends React.PureComponent {
 Logout.propTypes = {
     history: shape({
         push: func.isRequired
-    }).isRequired,
-    prompt: element
+    }).isRequired
 };
 
 const LogoutWithRouter = withRouter(Logout);

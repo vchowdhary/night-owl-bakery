@@ -7,6 +7,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import User from 'src/User';
+import LoginLink from 'src/Login/Link';
+import Logout from 'src/Logout';
+
 import styles from './index.less';
 
 /**
@@ -28,6 +32,25 @@ function Logo() {
 }
 
 /**
+ * Account toolbar component.
+ *
+ * @private
+ *
+ * @returns {ReactElement} The component's elements.
+ */
+function Account() {
+    if (!User.loggedIn) {
+        return <nav>
+            <LoginLink />
+        </nav>;
+    }
+
+    return <nav>
+        <Logout />
+    </nav>;
+}
+
+/**
  * Header component.
  *
  * @alias module:src/Header
@@ -42,6 +65,7 @@ function Header() {
         <section className={styles.center}>
         </section>
         <section className={styles.end}>
+            <Account />
         </section>
     </header>;
 }

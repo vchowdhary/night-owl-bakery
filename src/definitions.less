@@ -45,6 +45,40 @@
     @color-bg-disabled, @color-text-dark, @color-text-light
 );
 
+.button() {
+    background: @color-bg;
+    color: @color-text;
+    border: @border;
+    transition: all @duration-transition;
+    line-height: @line-height;
+    padding: @spacing-y @spacing-x;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    &:hover {
+        background: @color-bg-hover;
+        color: @color-text-bg-hover;
+    }
+
+    &:focus, &:active {
+        background: @color-bg-active;
+        color: @color-text-bg-active;
+    }
+}
+
+.canDisable() {
+    &:disabled {
+        &, &:hover, &:focus, &:active {
+            background: @color-bg-disabled;
+            color: @color-text-bg-disabled;
+        }
+    }
+}
+
 @border: 1px solid fadeout(@color-text, 75%);
 @border-primary: @spacing-x / 2 solid @color-primary;
 

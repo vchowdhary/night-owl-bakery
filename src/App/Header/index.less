@@ -1,6 +1,6 @@
 @import '~src/definitions';
 
-@header-font-size: @font-size * 1.5;
+@height-header: 4 * @spacing-y;
 
 .logo {
     display: flex;
@@ -8,8 +8,10 @@
     align-items: center;
     justify-content: center;
 
+    @font-size-logo: @font-size * 1.5;
+
     .image {
-        @height: @header-font-size * @line-height;
+        @height: @font-size-logo * @line-height;
         height: @height;
         min-width: @height;
 
@@ -19,6 +21,7 @@
     }
 
     .text {
+        font-size: @font-size-logo;
         margin-left: @spacing-x;
         text-align: center;
     }
@@ -26,20 +29,17 @@
 
 
 .header {
+    height: @height-header;
     padding: @spacing-y @spacing-x;
 
     display: flex;
+    align-items: center;
     justify-content: space-between;
     background: @color-primary;
 
     * {
         color: @color-text-bg-primary;
     }
-
-    * {
-        font-size: @header-font-size;
-    }
-
 
     > * {
         display: flex;

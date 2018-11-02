@@ -60,31 +60,11 @@ select {
 }
 
 button, input[type=submit] {
-    background: @color-bg;
-    color: @color-text;
-    border: @border;
-    transition: all @duration-transition;
-    line-height: @line-height;
-    padding: @spacing-y @spacing-x;
-
-    &:hover {
-        background: @color-bg-hover;
-        color: @color-text-bg-hover;
-    }
-
-    &:focus, &:active {
-        background: @color-bg-active;
-        color: @color-text-bg-active;
-    }
+    .button();
 }
 
 input, button {
-    &:disabled {
-        &, &:hover, &:focus, &:active {
-            background: @color-bg-disabled;
-            color: @color-text-bg-disabled;
-        }
-    }
+    .canDisable();
 }
 
 fieldset {

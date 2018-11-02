@@ -13,7 +13,7 @@ import Spinner from 'src/Spinner';
 import User from 'src/User';
 
 import AsyncNotFound from 'bundle-loader?lazy!./NotFound';
-import AsyncLogin from 'bundle-loader?lazy!./Login';
+import AsyncLogin from 'bundle-loader?lazy!src/Login';
 import Header from './Header';
 
 import styles from './index.less';

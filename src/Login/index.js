@@ -1,7 +1,7 @@
 /**
  * Site-wide login page.
  *
- * @module src/App/Login
+ * @module src/Login
  */
 
 import React from 'react';

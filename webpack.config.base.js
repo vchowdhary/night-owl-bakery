@@ -15,11 +15,10 @@ const publicPath = '/';
 module.exports = {
     context: ctxDir,
     entry: {
-        main: ['normalize.css', srcDir],
-        lib: [
+        main: [
             '@babel/polyfill',
-            'react', 'react-dom',
-            'react-router', 'react-router-dom'
+            'normalize.css',
+            srcDir
         ]
     },
     output: {
