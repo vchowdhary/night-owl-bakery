@@ -5,8 +5,9 @@
  */
 
 import React from 'react';
-import { func, shape, string, element } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import Octicon, { SignIn, Plus } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 import Spinner from 'src/Spinner';
@@ -58,7 +59,7 @@ export default class Login extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { onClick, location, prompt = 'Log in' } = this.props;
+        const { onClick, location, history } = this.props;
         const { loading, redirect, message } = this.state;
 
         if (redirect) {
@@ -103,7 +104,17 @@ export default class Login extends React.Component {
                 type='submit'
                 disabled={loading}
             >
-                {prompt}
+                <Octicon icon={SignIn} />
+                &nbsp;Log in
+            </button>
+            <button
+                disabled={loading}
+                onClick={() => {
+                    history.push('/signup/');
+                }}
+            >
+                <Octicon icon={Plus} />
+                &nbsp;Sign up
             </button>
             {message}
         </form>;
@@ -145,6 +156,8 @@ Login.propTypes = {
             }).isRequired
         })
     }).isRequired,
-    prompt: element
+    history: shape({
+        push: func.isRequired
+    }).isRequired
 };
 

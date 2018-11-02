@@ -5,9 +5,8 @@
  */
 
 import React from 'react';
-import { string, node } from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
-import Octicon, { Plus, Person } from '@githubprimer/octicons-react';
+import Octicon, { Person } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 import Login from 'src/Login';
@@ -17,32 +16,6 @@ import DropdownNav from './DropdownNav';
 import styles from './index.less';
 
 const LoginWithRouter = withRouter(Login);
-
-/**
- * Button-based link component.
- *
- * @private
- *
- * @param {Object} props - The component's props.
- * @param {Object} props.history - Router history object.
- * @param {string} props.to - The location to link to.
- * @param {node} props.children - The component's children.
- * @returns {ReactElement} The component's elements.
- */
-const ButtonLink = withRouter(function(props) {
-    const { history, to, children } = props;
-
-    return <button onClick={() => {
-        history.push(to);
-    }}>
-        {children}
-    </button>;
-});
-
-ButtonLink.propTypes = {
-    to: string.isRequired,
-    children: node
-};
 
 /**
  * Logo component.
@@ -84,11 +57,7 @@ function Account() {
         menu = [
             <LoginWithRouter key="login" onClick={event => {
                 event.stopPropagation();
-            }} />,
-            <ButtonLink key="signup" to="/signup/">
-                <Octicon icon={Plus} />
-                &nbsp;Sign up
-            </ButtonLink>
+            }} />
         ];
     }
 
