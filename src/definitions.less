@@ -12,6 +12,12 @@
     }
 }
 
+.media-screen-md(@rules) {
+    @media screen and (max-width: @width-md) {
+        @rules();
+    }
+}
+
 @font-size: 16px;
 @line-height: 1.1;
 

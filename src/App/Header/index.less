@@ -11,19 +11,35 @@
     @font-size-logo: @font-size * 1.5;
 
     .image {
-        @height: @font-size-logo * @line-height;
-        height: @height;
-        min-width: @height;
+        height: @height-header;
+        min-width: @height-header;
 
-        background: url('/images/logo-notext.svg') no-repeat;
+        background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
+        background-image: url('/images/logo-notext.svg');
+
+        .media-screen-sm({
+            background-image: url('/images/logo.svg');
+        });
     }
 
     .text {
         font-size: @font-size-logo;
         margin-left: @spacing-x;
         text-align: center;
+
+        &::after {
+            content: 'Night Owl Bakery';
+
+            .media-screen-md({
+                content: 'NOB';
+            });
+
+            .media-screen-sm({
+                content: '';
+            });
+        }
     }
 }
 

@@ -27,7 +27,7 @@ function Logo() {
         to="/"
     >
         <div className={styles.image} />
-        <h1 className={styles.text}>Night Owl Bakery</h1>
+        <div className={styles.text} />
     </NavLink>;
 }
 
