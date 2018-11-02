@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { shape, string, element } from 'prop-types';
+import { func, shape, string, element } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import User from 'src/User';
@@ -58,7 +58,7 @@ export default class Login extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { location, prompt = 'Log in' } = this.props;
+        const { onClick, location, prompt = 'Log in' } = this.props;
         const { loading, redirect, message } = this.state;
 
         if (redirect) {
@@ -70,9 +70,7 @@ export default class Login extends React.Component {
 
         return <form
             className={styles.login}
-            onClick={event => {
-                event.stopPropagation();
-            }}
+            onClick={onClick}
             onSubmit={async(event) => {
                 event.preventDefault();
 
@@ -139,6 +137,7 @@ export default class Login extends React.Component {
 }
 
 Login.propTypes = {
+    onClick: func,
     location: shape({
         state: shape({
             referer: shape({

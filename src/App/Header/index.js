@@ -82,7 +82,9 @@ function Account() {
         ];
     } else {
         menu = [
-            <LoginWithRouter key="login" />,
+            <LoginWithRouter key="login" onClick={event => {
+                event.stopPropagation();
+            }} />,
             <ButtonLink key="signup" to="/signup/">
                 <Octicon icon={Plus} />
                 &nbsp;Sign up

@@ -11,7 +11,7 @@ import classNames from 'classnames';
 
 import Dropdown from 'src/Dropdown';
 
-import styles from './DropdownNav.less';
+import styles from './index.less';
 
 /**
  * Dropdown button React component.
