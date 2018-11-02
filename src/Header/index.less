@@ -1,0 +1,57 @@
+@import '~src/definitions';
+
+@header-font-size: @font-size * 1.5;
+
+.logo {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+
+    .image {
+        @height: @header-font-size * @line-height;
+        height: @height;
+        min-width: @height;
+
+        background: url('/images/logo.svg') no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+
+    .text {
+        margin-left: @spacing-x;
+        text-align: center;
+    }
+}
+
+
+.header {
+    padding: @spacing-y @spacing-x;
+
+    display: flex;
+    justify-content: space-between;
+
+    border-bottom: @border-primary;
+
+    * {
+        font-size: @header-font-size;
+    }
+
+
+    > * {
+        display: flex;
+    }
+
+    > .start {
+        justify-content: flex-start;
+    }
+
+    > .center {
+        justify-content: center;
+    }
+
+    > .end {
+        justify-content: flex-end;
+    }
+}
+

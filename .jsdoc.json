@@ -1,0 +1,14 @@
+{
+  "opts": {
+    "recurse": true,
+    "access": "all"
+  },
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "plugins": ["plugins/markdown"],
+  "markdown": {
+    "tags": ["link"]
+  }
+}
+

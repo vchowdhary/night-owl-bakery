@@ -1,0 +1,41 @@
+@spacing-x: 8px;
+@spacing-y: 8px;
+
+@font-size: 16px;
+@line-height: 1.1;
+
+@duration-transition: 0.2s;
+
+@color-primary: #C1272D;
+@color-bg: rgb(90%, 90%, 90%);
+@color-bg-disabled: rgb(70%, 70%, 70%);
+
+@color-text-dark: rgb(10%, 10%, 10%);
+@color-text-light: rgb(90%, 90%, 90%);
+
+@color-text: contrast(
+    @color-bg, @color-text-dark, @color-text-light
+);
+
+@color-bg-hover: tint(@color-primary, 25%);
+@color-bg-active: @color-primary;
+
+@color-text-bg-primary: contrast(
+    @color-primary, @color-text-dark, @color-text-light
+);
+
+@color-text-bg-hover: contrast(
+    @color-bg-hover, @color-text-dark, @color-text-light
+);
+
+@color-text-bg-active: contrast(
+    @color-bg-active, @color-text-dark, @color-text-light
+);
+
+@color-text-bg-disabled: contrast(
+    @color-bg-disabled, @color-text-dark, @color-text-light
+);
+
+@border: 1px solid fadeout(@color-text, 75%);
+@border-primary: @spacing-x / 2 solid @color-primary;
+

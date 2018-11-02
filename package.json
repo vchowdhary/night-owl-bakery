@@ -1,0 +1,85 @@
+{
+  "name": "night-owl-bakery",
+  "version": "1.0.0",
+  "description": "Night Owl Bakery on-demand work app",
+  "main": "lib/index.js",
+  "scripts": {
+    "doc-lib": "jsdoc -d doc/lib -c .jsdoc.json README.md lib",
+    "doc-src": "jsdoc -d doc/src -c .jsdoc.json README.md src",
+    "dev": "node build.js development",
+    "dist": "node build.js production",
+    "prepare": "node build.js production",
+    "lint": "eslint *.js src lib",
+    "start": "node lib/index.js"
+  },
+  "files": [
+    "dist",
+    "public",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspyrx/night-owl-bakery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aspyrx/night-owl-bakery/issues"
+  },
+  "homepage": "https://github.com/aspyrx/night-owl-bakery#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.1.5",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "babel-preset-minify": "^0.5.0",
+    "bundle-loader": "^0.5.6",
+    "classnames": "^2.2.6",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.7.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jsdoc": "^3.5.5",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "loader-utils": "^1.1.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "normalize.css": "^8.0.0",
+    "postcss-loader": "^3.0.0",
+    "progress": "^2.0.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-hot-loader": "^4.3.11",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.20.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "engine": {
+    "npm": ">=3.0.0",
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "connect-history-api-fallback": "^1.5.0",
+    "connect-session-sequelize": "^6.0.0",
+    "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^4.41.0",
+    "sqlite3": "^4.0.3"
+  },
+  "optionalDependencies": {}
+}
