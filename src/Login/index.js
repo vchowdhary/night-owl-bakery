@@ -100,23 +100,25 @@ export default class Login extends React.Component {
                 required={true}
                 disabled={loading}
             />
-            <button
-                type='submit'
-                disabled={loading}
-            >
-                <Octicon icon={SignIn} />
-                &nbsp;Log in
-            </button>
-            <button
-                disabled={loading}
-                onClick={() => {
-                    history.push('/signup/');
-                }}
-            >
-                <Octicon icon={Plus} />
-                &nbsp;Sign up
-            </button>
-            {message}
+            <fieldset>
+                <button
+                    type='submit'
+                    disabled={loading}
+                >
+                    <Octicon icon={SignIn} />
+                    &nbsp;Log in
+                </button>
+                <button
+                    disabled={loading}
+                    onClick={() => {
+                        history.push('/signup/');
+                    }}
+                >
+                    <Octicon icon={Plus} />
+                    &nbsp;Sign up
+                </button>
+                {message}
+            </fieldset>
         </form>;
     }
 

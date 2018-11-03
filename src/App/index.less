@@ -68,6 +68,16 @@ input, button {
 }
 
 fieldset {
+    display: flex;
+    flex-flow: row;
+    > * {
+        flex: 1;
+
+        &:not(:first-child) {
+            margin-inline-start: @spacing-x;
+        }
+    }
+
     border: none;
     margin: 0;
     padding: 0;
