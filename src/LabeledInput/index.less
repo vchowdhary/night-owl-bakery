@@ -1,0 +1,20 @@
+@import '~src/definitions';
+
+label.label {
+    display: flex;
+    align-items: baseline;
+
+    > .label {
+        flex: 0.25;
+        text-align: end;
+    }
+
+    > * {
+        flex: 1;
+
+        &:not(:first-child) {
+            margin-inline-start: @spacing-x;
+        }
+    }
+}
+

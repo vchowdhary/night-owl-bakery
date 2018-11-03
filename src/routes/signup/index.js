@@ -11,6 +11,8 @@ import { Redirect } from 'react-router-dom';
 import Octicon, { Plus } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
+import Spinner from 'src/Spinner';
+import LabeledInput from 'src/LabeledInput';
 
 import styles from './index.less';
 
@@ -39,26 +41,38 @@ const PASSWORD_MAXLEN = 72;
  */
 class Signup extends React.Component {
     /**
-     * Initializes the signup form.
+     * Initializes the component.
+     *
+     * @param {Object} props - The component's props.
      */
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         const { loggedIn } = User;
 
         const loading = loggedIn === null;
         const redirect = loggedIn === true;
 
+        const {
+            username = '',
+            password = ''
+        } = this.locationState;
+
         this.state = {
             loading,
             redirect,
+            username,
+            password,
             message: null
         };
 
-        this.inputs = {
-            username: null,
-            password: null
-        };
+        [
+            'onSubmit',
+            'onUsernameChange',
+            'onPasswordChange'
+        ].forEach(key => {
+            this[key] = this[key].bind(this);
+        });
 
         if (loading) {
             (async() => {
@@ -72,57 +86,102 @@ class Signup extends React.Component {
     }
 
     /**
+     * The current location state.
+     *
+     * @private
+     * @readonly
+     * @type {Object}
+     */
+    get locationState() {
+        const { location } = this.props;
+
+        return location.state || {
+            referer: { pathname: location.pathname }
+        };
+    }
+
+    /**
+     * Handles form submission.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onSubmit(event) {
+        event.preventDefault();
+
+        const { username, password } = this.state;
+
+        this.setState({ loading: true });
+        this.signup(username, password);
+    }
+
+    /**
+     * Handles username change.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onUsernameChange(event) {
+        this.setState({ username: event.target.value });
+    }
+
+    /**
+     * Handles password change.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onPasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+
+    /**
      * Renders the component.
      *
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { location } = this.props;
-        const { loading, redirect, message } = this.state;
+        const {
+            onSubmit,
+            onUsernameChange,
+            onPasswordChange
+        } = this;
 
-        const locationState = location.state || {
-            referer: { pathname: location.pathname }
-        };
+        const {
+            loading, redirect, message,
+            username, password
+        } = this.state;
 
         if (redirect) {
-            const { referer } = locationState;
+            const { referer } = this.locationState;
             return <Redirect to={referer} />;
         }
 
         return <form
             className={styles.signup}
-            onSubmit={async(event) => {
-                event.preventDefault();
-
-                const {
-                    username,
-                    password
-                } = this.inputs;
-
-                this.setState({ loading: true });
-                await this.signup(
-                    username.value,
-                    password.value
-                );
-            }}
+            onSubmit={onSubmit}
         >
-            <input
+            {loading ? <Spinner /> : null}
+            <LabeledInput
                 type="username"
-                ref={input => (this.inputs.username = input)}
-                defaultValue={locationState.username}
-                placeholder="Username"
+                label="Username"
                 maxLength={USERNAME_MAXLEN}
                 required={true}
                 disabled={loading}
+                value={username}
+                onChange={onUsernameChange}
             />
-            <input
+            <LabeledInput
                 type="password"
-                ref={input => (this.inputs.password = input)}
-                defaultValue={locationState.password}
-                placeholder="Password"
+                label="Password"
                 maxLength={PASSWORD_MAXLEN}
                 required={true}
                 disabled={loading}
+                value={password}
+                onChange={onPasswordChange}
             />
             <button
                 type="submit"
