@@ -11,6 +11,8 @@ import Octicon, { Person } from '@githubprimer/octicons-react';
 import User from 'src/User';
 import Login from 'src/Login';
 import Logout from 'src/Logout';
+import ButtonLink from 'src/ButtonLink';
+
 import DropdownNav from './DropdownNav';
 
 import styles from './index.less';
@@ -52,6 +54,10 @@ function Account() {
     let menu;
     if (User.loggedIn) {
         menu = [
+            <ButtonLink key="profile" to="/profile">
+                <Octicon icon={Person} />
+                &nbsp;My Profile
+            </ButtonLink>,
             <Logout key="logout" />
         ];
     } else {
