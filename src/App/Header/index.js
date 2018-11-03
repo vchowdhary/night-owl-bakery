@@ -29,6 +29,7 @@ function Logo() {
         className={styles.logo}
         activeClassName={styles.active}
         to="/"
+        exact={true}
     >
         <div className={styles.image} />
         <div className={styles.text} />

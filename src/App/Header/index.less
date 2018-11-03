@@ -7,6 +7,10 @@
 
     @font-size-logo: @font-size * 1.5;
 
+    &.active {
+        visibility: hidden;
+    }
+
     .image {
         height: @height-header;
         min-width: @height-header;
@@ -57,23 +61,6 @@
     > * {
         display: flex;
         align-items: center;
-
-        > a {
-            display: flex;
-            align-items: center;
-        }
-
-        > *:not(:first-child) {
-            margin-inline-start: @spacing-x;
-        }
-
-        &:first-child {
-            justify-content: flex-start;
-        }
-
-        &:last-child {
-            justify-content: flex-end;
-        }
     }
 
     .account {
