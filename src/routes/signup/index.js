@@ -5,37 +5,19 @@
  */
 
 import React from 'react';
+import { shape, string, func } from 'prop-types';
 import { hot } from 'react-hot-loader';
-import { shape, string } from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Octicon, { Plus } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
-import Spinner from 'src/Spinner';
-import LabeledInput from 'src/LabeledInput';
+
+import Basic from './Basic';
+import Account from './Account';
 
 import styles from './index.less';
 
 /**
- * Maximum text field length.
- *
- * @private
- * @readonly
- * @type {number}
- */
-const TEXT_MAXLEN = 255;
-
-/**
- * Maximum password length.
- *
- * @private
- * @readonly
- * @type {number}
- */
-const PASSWORD_MAXLEN = 72;
-
-/**
- * Signup form.
+ * Signup page.
  *
  * @alias module:src/routes/signup
  */
@@ -53,23 +35,14 @@ class Signup extends React.Component {
         const loading = loggedIn === null;
         const redirect = loggedIn === true;
 
-        const {
-            username = '',
-            password = ''
-        } = this.locationState;
-
         this.state = {
             loading,
             redirect,
-            username,
-            password,
             message: null
         };
 
         [
-            'onSubmit',
-            'onUsernameChange',
-            'onPasswordChange'
+            'onAccountSubmit'
         ].forEach(key => {
             this[key] = this[key].bind(this);
         });
@@ -83,6 +56,19 @@ class Signup extends React.Component {
                 });
             })();
         }
+    }
+
+    /**
+     * Handles account form submission.
+     *
+     * @private
+     * @param {string} username - The username.
+     * @param {string} password - The password.
+     */
+    onAccountSubmit(username, password) {
+        const { data } = this.state;
+        this.setState({ loading: true });
+        this.signup(username, password, data);
     }
 
     /**
@@ -101,41 +87,6 @@ class Signup extends React.Component {
     }
 
     /**
-     * Handles form submission.
-     *
-     * @private
-     * @param {Event} event - The event.
-     */
-    onSubmit(event) {
-        event.preventDefault();
-
-        const { username, password } = this.state;
-
-        this.setState({ loading: true });
-        this.signup(username, password);
-    }
-
-    /**
-     * Handles username change.
-     *
-     * @private
-     * @param {Event} event - The event.
-     */
-    onUsernameChange(event) {
-        this.setState({ username: event.target.value });
-    }
-
-    /**
-     * Handles password change.
-     *
-     * @private
-     * @param {Event} event - The event.
-     */
-    onPasswordChange(event) {
-        this.setState({ password: event.target.value });
-    }
-
-    /**
      * Renders the component.
      *
      * @returns {ReactElement} The component's elements.
@@ -147,62 +98,42 @@ class Signup extends React.Component {
         }
 
         const {
-            onSubmit,
-            onUsernameChange,
-            onPasswordChange
+            locationState,
+            onAccountSubmit
         } = this;
 
         const {
-            loading, message,
-            username, password
+            loading,
+            message
         } = this.state;
 
-        return <form
-            className={styles.signup}
-            onSubmit={onSubmit}
-        >
-            {loading ? <Spinner /> : null}
-            <LabeledInput
-                type="username"
-                label="Username"
-                maxLength={TEXT_MAXLEN}
-                required={true}
+        return <div className={styles.signup}>
+            <Basic
                 disabled={loading}
-                value={username}
-                onChange={onUsernameChange}
             />
-            <LabeledInput
-                type="password"
-                label="Password"
-                maxLength={PASSWORD_MAXLEN}
-                required={true}
+            <Account
+                defaultUsername={locationState.username}
+                defaultPassword={locationState.password}
                 disabled={loading}
-                value={password}
-                onChange={onPasswordChange}
+                onSubmit={onAccountSubmit}
+                message={message}
             />
-            <button
-                type="submit"
-                disabled={loading}
-            >
-                <Octicon icon={Plus} />
-                &nbsp;Sign up
-            </button>
-            {message}
-        </form>;
+        </div>;
     }
 
     /**
-     * Attempts to sign up with the given information.
+     * Attempts to sign up with the given account information.
      *
      * @private
-     * @param {string} id - The login ID.
+     * @param {string} username - The username.
      * @param {string} password - The password.
+     * @param {Object} data - Other account information.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if
      * an error was handled.
      */
-    async signup(id, password) {
+    async signup(username, password, data) {
         try {
-            await User.signup(id, password);
+            await User.signup(username, password, data);
 
             this.setState({ loading: false, redirect: true, message: null });
 
@@ -213,19 +144,20 @@ class Signup extends React.Component {
             </p>;
 
             this.setState({ loading: false, message });
+
             return err;
         }
     }
 }
 
 Signup.propTypes = {
+    className: string,
+    onClick: func,
     location: shape({
         state: shape({
             referer: shape({
                 pathname: string.isRequired
-            }).isRequired,
-            username: string,
-            password: string
+            }).isRequired
         }),
         pathname: string.isRequired
     }).isRequired

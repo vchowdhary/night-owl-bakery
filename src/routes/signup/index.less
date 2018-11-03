@@ -1,6 +1,10 @@
 @import '~src/definitions';
 
 .signup {
+    > *:not(:last-child) {
+        margin-block-end: @spacing-y;
+    }
+
     .error {
         .flashError();
     }

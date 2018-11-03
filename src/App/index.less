@@ -20,13 +20,13 @@ h1, h2, h3 {
     margin-block-start: 0;
     margin-block-end: 0;
 
-    &, h4, h5, h6, p {
-        margin: @spacing-y 0;
-    }
-
     .media-screen-md({
         text-align: center;
     });
+}
+
+h4, h5, h6, p {
+    margin: @spacing-y 0;
 }
 
 form {
@@ -40,6 +40,19 @@ form {
     > *:not(:last-child) {
         margin-block-end: @spacing-y;
     }
+
+    > div[role=group] {
+        display: flex;
+        flex-flow: row wrap;
+
+        > * {
+            flex: 1;
+
+            &:not(:last-child) {
+                margin-inline-end: @spacing-y;
+            }
+        }
+    }
 }
 
 .canDisable() {
@@ -51,7 +64,10 @@ form {
     }
 }
 
-input[type=text], input[type=username], input[type=password] {
+input[type=text],
+input[type=username],
+input[type=password],
+input[type=tel] {
     padding: @spacing-y @spacing-x;
     background: none;
     border: none;
