@@ -44,9 +44,13 @@ function Home() {
             <h3>
                 One cookie, one connection.
             </h3>
-            <h1 className={styles.cookieCounter}>
+        </article>
+        <article className={styles.cookieCounter}>
+            <h1>
                 2,314
             </h1>
+        </article>
+        <article>
             <p> cookies sold </p>
             <p>
                 In order to effect meaningful social exchange and cultivate
