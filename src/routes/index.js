@@ -18,7 +18,6 @@ import styles from './index.less';
  */
 function Home() {
     return <div className={styles.home}>
-        <section className={styles.logo} />
         <section className={styles.hero1}>
             <h1>
                 We bake good into our com&shy;mu&shy;ni&shy;ty.
@@ -41,6 +40,14 @@ function Home() {
                 are, what they are a part of, and that they are capable of
                 joining the workforce prepared.
             </p>
+        </article>
+        <section className={styles.hero2}>
+            <h1>
+                Our secret in&shy;gre&shy;di&shy;ent is com&shy;mu&shy;ni&shy;ty
+                em&shy;pow&shy;er&shy;ment.
+            </h1>
+        </section>
+        <article>
             <h3>
                 One cookie, one connection.
             </h3>
@@ -62,12 +69,7 @@ function Home() {
                 Join Us
             </ButtonLink>
         </article>
-        <section className={styles.hero2}>
-            <h1>
-                Our secret in&shy;gre&shy;di&shy;ent is com&shy;mu&shy;ni&shy;ty
-                em&shy;pow&shy;er&shy;ment.
-            </h1>
-        </section>
+        <section className={styles.logo} />
     </div>;
 }
 
