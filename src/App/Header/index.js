@@ -46,7 +46,7 @@ function Logo() {
 function Account() {
     const title = [
         <Octicon key='icon' icon={Person} />,
-        <span key='text'>&nbsp;Account</span>
+        <span key='text'>&nbsp;{User.id || 'Account'}</span>
     ];
 
     let menu;
