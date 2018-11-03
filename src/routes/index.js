@@ -8,7 +8,6 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 
 import styles from './index.less';
-import logoImage from 'public/images/logo.svg';
 
 /**
  * Homepage.
@@ -18,7 +17,7 @@ import logoImage from 'public/images/logo.svg';
 function Home() {
     return <div className={styles.home}>
         <section className={styles.hero}>
-            <img className={styles.logo} src={logoImage} />
+            <div className={styles.logo} />
         </section>
         <section>
             <h1>Welcome to the Bakery!</h1>

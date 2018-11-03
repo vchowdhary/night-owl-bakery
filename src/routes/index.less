@@ -14,10 +14,19 @@ div.home {
         padding: @spacing-y @spacing-x;
 
         &.hero {
-            height: 66vh;
+            padding-left: 0;
+            padding-right: 0;
 
-            > img {
-                height: 100%;
+            > .logo {
+                @height-logo: 66vh;
+
+                height: @height-logo;
+                width: 100%;
+
+                background-repeat: no-repeat;
+                background-size: auto @height-logo;
+                background-position: center;
+                background-image: url('/images/logo.svg');
             }
         }
 
