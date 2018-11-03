@@ -7,6 +7,8 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
+import ButtonLink from 'src/ButtonLink';
+
 import styles from './index.less';
 
 /**
@@ -39,6 +41,22 @@ function Home() {
                 are, what they are a part of, and that they are capable of
                 joining the workforce prepared.
             </p>
+            <h3>
+                One cookie, one connection.
+            </h3>
+            <h1 className={styles.cookieCounter}>
+                2,314
+            </h1>
+            <p> cookies sold </p>
+            <p>
+                In order to effect meaningful social exchange and cultivate
+                professional growth, we created an app to mediate between the
+                bakers and hungry, community-oriented individuals like you. Join
+                our movement below!
+            </p>
+            <ButtonLink key="signup" to="/signup/">
+                Join Us
+            </ButtonLink>
         </article>
         <section className={styles.hero2}>
             <h1>
