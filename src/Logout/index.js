@@ -5,59 +5,44 @@
  */
 
 import React from 'react';
-import { shape, func } from 'prop-types';
+import { string, shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Octicon, { SignOut } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 
-import styles from './index.less';
-
 /**
  * Logout React component.
  *
  * @alias module:src/Logout
+ *
+ * @param {Object} props - The component's props.
+ * @param {string} [props.className] - Button class.
+ * @param {Object} props.history - Router history.
+ * @returns {ReactElement} The component's elements.
  */
-class Logout extends React.PureComponent {
-    /**
-     * Renders the component.
-     *
-     * @returns {ReactElement} The component's elements.
-     */
-    render() {
-        return <form className={styles.logout} onSubmit={event => {
-            event.preventDefault();
-            this.logout();
+function Logout(props) {
+    const { className, history } = props;
+
+    return <button
+        className={className}
+        disabled={!User.loggedIn}
+        onClick={async() => {
+            try {
+                await User.logout();
+
+                history.go(0);
+            } catch (err) {
+                console.log(err);
+            }
         }}>
-            <button type='submit' disabled={!User.loggedIn}>
-                Log out&nbsp;
-                <Octicon icon={SignOut} />
-            </button>
-        </form>;
-    }
-
-    /**
-     * Attempts to log out.
-     *
-     * @returns {Promise} Resolves when logout has succeeded, or rejects with an
-     * error.
-     */
-    async logout() {
-        const { history } = this.props;
-
-        try {
-            await User.logout();
-
-            history.go(0);
-        } catch (err) {
-            console.log(err);
-        }
-
-        return void 0;
-    }
+        Log out&nbsp;
+        <Octicon icon={SignOut} />
+    </button>;
 }
 
 Logout.propTypes = {
+    className: string,
     history: shape({
         push: func.isRequired
     }).isRequired

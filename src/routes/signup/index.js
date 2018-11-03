@@ -15,6 +15,24 @@ import User from 'src/User';
 import styles from './index.less';
 
 /**
+ * Maximum username length.
+ *
+ * @private
+ * @readonly
+ * @type {number}
+ */
+const USERNAME_MAXLEN = 255;
+
+/**
+ * Maximum password length.
+ *
+ * @private
+ * @readonly
+ * @type {number}
+ */
+const PASSWORD_MAXLEN = 72;
+
+/**
  * Signup form.
  *
  * @alias module:src/routes/signup
@@ -86,7 +104,6 @@ class Signup extends React.Component {
                     username.value,
                     password.value
                 );
-                this.setState({ loading: false });
             }}
         >
             <input
@@ -94,6 +111,7 @@ class Signup extends React.Component {
                 ref={input => (this.inputs.username = input)}
                 defaultValue={locationState.username}
                 placeholder="Username"
+                maxLength={USERNAME_MAXLEN}
                 required={true}
                 disabled={loading}
             />
@@ -102,6 +120,7 @@ class Signup extends React.Component {
                 ref={input => (this.inputs.password = input)}
                 defaultValue={locationState.password}
                 placeholder="Password"
+                maxLength={PASSWORD_MAXLEN}
                 required={true}
                 disabled={loading}
             />
@@ -119,28 +138,24 @@ class Signup extends React.Component {
     /**
      * Attempts to sign up with the given information.
      *
-     * @param {string} username - The username.
+     * @param {string} id - The login ID.
      * @param {string} password - The password.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if
      * an error was handled.
      */
-    async signup(username, password) {
+    async signup(id, password) {
         try {
-            void username;
-            void password;
-            throw new Error('Unimplemented!');
+            await User.signup(id, password);
 
-            /*
-            this.setState({ redirect: true, message: null });
+            this.setState({ loading: false, redirect: true, message: null });
 
             return null;
-            */
         } catch (err) {
             const message = <p className={styles.error}>
                 Signup failed: {err.message}
             </p>;
 
-            this.setState({ message });
+            this.setState({ loading: false, message });
             return err;
         }
     }

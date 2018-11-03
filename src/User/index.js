@@ -70,7 +70,15 @@ class User {
              * @private
              * @type {Promise?}
              */
-            _logoutPromise: { value: null, writable: true }
+            _logoutPromise: { value: null, writable: true },
+
+            /**
+             * The current signup promise, or `null`.
+             *
+             * @private
+             * @type {Promise?}
+             */
+            _signupPromise: { value: null, writable: true }
         });
     }
 
@@ -147,7 +155,7 @@ class User {
      * If an existing login request is in progress, its promise is returned
      * instead.
      *
-     * @param {string} id - The id.
+     * @param {string} id - The login ID.
      * @param {string} password - The password.
      * @returns {Promise} Resolves with the user instance on success, or rejects
      * with an error.
@@ -163,12 +171,10 @@ class User {
                     return this;
                 }
 
-                const { status } = await XHRpromise(
-                    'PUT', API, {
-                        contentType: 'application/json',
-                        body: JSON.stringify({ id, password })
-                    }
-                );
+                const { status } = await XHRpromise('PUT', API, {
+                    contentType: 'application/json',
+                    body: JSON.stringify({ id, password })
+                });
 
                 switch (status) {
                     case 200:
@@ -210,7 +216,7 @@ class User {
                     successStatus: 204
                 });
 
-                this._username = false;
+                this._id = false;
             } finally {
                 this._logoutPromise = null;
             }
@@ -218,6 +224,51 @@ class User {
             return this;
         })();
         return this._logoutPromise;
+    }
+
+    /**
+     * Attempts to sign up a new user.
+     *
+     * If an existing signup request is in progress, its promise is returned
+     * instead.
+     *
+     * @param {string} id - The login ID.
+     * @param {string} password - The password.
+     * @returns {Promise} Resolves with the user instance on success, or rejects
+     * with an error.
+     */
+    signup(id, password) {
+        if (this._signupPromise) {
+            return this._signupPromise;
+        }
+
+        const reqURL = `${API}/${encodeURIComponent(id)}`;
+
+        this._signupPromise = (async() => {
+            try {
+                const { status, response } = await XHRpromise('PUT', reqURL, {
+                    contentType: 'application/json',
+                    body: JSON.stringify({ password })
+                });
+
+                switch (status) {
+                    case 200:
+                    case 201:
+                        break;
+                    case 400:
+                        throw new Error(response);
+                    default:
+                        throw new Error('Unknown error occurred.');
+                }
+
+                this._id = id;
+            } finally {
+                this._signupPromise = null;
+            }
+
+            return this;
+        })();
+        return this._signupPromise;
     }
 }
 

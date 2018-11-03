@@ -76,7 +76,7 @@ export default class Login extends React.Component {
         return <form
             className={classes}
             onClick={onClick}
-            onSubmit={async(event) => {
+            onSubmit={event => {
                 event.preventDefault();
 
                 const { username, password } = this.inputs;
@@ -85,8 +85,7 @@ export default class Login extends React.Component {
                 password.value = '';
 
                 this.setState({ loading: true });
-                await this.login(usernameValue, passwordValue);
-                this.setState({ loading: false });
+                this.login(usernameValue, passwordValue);
             }}
         >
             {loading ? <Spinner /> : null}
@@ -141,7 +140,7 @@ export default class Login extends React.Component {
         try {
             await User.login(username, password);
 
-            this.setState({ redirect: true, message: null });
+            this.setState({ loading: false, redirect: true, message: null });
 
             return null;
         } catch (err) {
@@ -149,7 +148,7 @@ export default class Login extends React.Component {
                 Login failed: {err.message}
             </p>;
 
-            this.setState({ message });
+            this.setState({ loading: false, message });
 
             return err;
         }
