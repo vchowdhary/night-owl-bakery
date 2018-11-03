@@ -79,7 +79,6 @@ export default class Login extends React.Component {
      * Handles form submission.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onSubmit(event) {
@@ -95,7 +94,6 @@ export default class Login extends React.Component {
      * Handles username change.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onUsernameChange(event) {
@@ -106,7 +104,6 @@ export default class Login extends React.Component {
      * Handles password change.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onPasswordChange(event) {
@@ -134,6 +131,11 @@ export default class Login extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
+        if (this.state.redirect) {
+            const { referer } = this.locationState;
+            return <Redirect to={referer} />;
+        }
+
         const {
             onSubmit,
             onUsernameChange,
@@ -146,14 +148,9 @@ export default class Login extends React.Component {
         } = this.props;
 
         const {
-            loading, redirect, message,
+            loading, message,
             username, password
         } = this.state;
-
-        if (redirect) {
-            const { referer } = this.locationState;
-            return <Redirect to={referer} />;
-        }
 
         const classes = classNames(styles.login, className);
 
@@ -200,6 +197,7 @@ export default class Login extends React.Component {
     /**
      * Attempts to log in with the given credentials.
      *
+     * @private
      * @param {string} username - The username.
      * @param {string} password - The password.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if

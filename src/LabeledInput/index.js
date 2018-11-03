@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
+import classNames from 'classnames';
 
 import styles from './index.less';
 
@@ -19,15 +20,20 @@ import styles from './index.less';
 function LabeledInput(props) {
     const { label, placeholder = label, ...rest } = props;
 
-    return <label className={styles.label}>
-        <span className={styles.label}>{label}</span>
+    const classes = classNames(styles.label, {
+        [styles.required]: rest.required
+    });
+
+    return <label className={classes}>
+        <span className={classes}>{label}</span>
         <input placeholder={placeholder} {...rest} />
     </label>;
 }
 
 LabeledInput.propTypes = {
     label: string.isRequired,
-    placeholder: string
+    placeholder: string,
+    required: bool
 };
 
 export default LabeledInput;

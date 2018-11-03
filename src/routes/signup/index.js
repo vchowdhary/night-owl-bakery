@@ -17,13 +17,13 @@ import LabeledInput from 'src/LabeledInput';
 import styles from './index.less';
 
 /**
- * Maximum username length.
+ * Maximum text field length.
  *
  * @private
  * @readonly
  * @type {number}
  */
-const USERNAME_MAXLEN = 255;
+const TEXT_MAXLEN = 255;
 
 /**
  * Maximum password length.
@@ -104,7 +104,6 @@ class Signup extends React.Component {
      * Handles form submission.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onSubmit(event) {
@@ -120,7 +119,6 @@ class Signup extends React.Component {
      * Handles username change.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onUsernameChange(event) {
@@ -131,7 +129,6 @@ class Signup extends React.Component {
      * Handles password change.
      *
      * @private
-     *
      * @param {Event} event - The event.
      */
     onPasswordChange(event) {
@@ -144,6 +141,11 @@ class Signup extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
+        if (this.state.redirect) {
+            const { referer } = this.locationState;
+            return <Redirect to={referer} />;
+        }
+
         const {
             onSubmit,
             onUsernameChange,
@@ -151,14 +153,9 @@ class Signup extends React.Component {
         } = this;
 
         const {
-            loading, redirect, message,
+            loading, message,
             username, password
         } = this.state;
-
-        if (redirect) {
-            const { referer } = this.locationState;
-            return <Redirect to={referer} />;
-        }
 
         return <form
             className={styles.signup}
@@ -168,7 +165,7 @@ class Signup extends React.Component {
             <LabeledInput
                 type="username"
                 label="Username"
-                maxLength={USERNAME_MAXLEN}
+                maxLength={TEXT_MAXLEN}
                 required={true}
                 disabled={loading}
                 value={username}
@@ -197,6 +194,7 @@ class Signup extends React.Component {
     /**
      * Attempts to sign up with the given information.
      *
+     * @private
      * @param {string} id - The login ID.
      * @param {string} password - The password.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if
