@@ -104,29 +104,27 @@ export default class Login extends React.Component {
                 required={true}
                 disabled={loading}
             />
-            <div role="group">
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    <Octicon icon={SignIn} />
-                    &nbsp;Log in
-                </button>
-                <button
-                    disabled={loading}
-                    onClick={() => {
-                        const { inputs } = this;
-                        const username = inputs.username.value;
-                        const password = inputs.password.value;
-                        history.push('/signup/', {
-                            referer, username, password
-                        });
-                    }}
-                >
-                    <Octicon icon={Plus} />
-                    &nbsp;Sign up
-                </button>
-            </div>
+            <button
+                type="submit"
+                disabled={loading}
+            >
+                <Octicon icon={SignIn} />
+                &nbsp;Log in
+            </button>
+            <button
+                disabled={loading}
+                onClick={() => {
+                    const { inputs } = this;
+                    const username = inputs.username.value;
+                    const password = inputs.password.value;
+                    history.push('/signup/', {
+                        referer, username, password
+                    });
+                }}
+            >
+                <Octicon icon={Plus} />
+                &nbsp;Sign up
+            </button>
             {message}
         </form>;
     }
