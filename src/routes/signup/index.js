@@ -81,7 +81,7 @@ class Signup extends React.Component {
         const { loading, redirect, message } = this.state;
 
         const locationState = location.state || {
-            referer: { pathname: '/' }
+            referer: { pathname: location.pathname }
         };
 
         if (redirect) {
@@ -169,7 +169,8 @@ Signup.propTypes = {
             }).isRequired,
             username: string,
             password: string
-        })
+        }),
+        pathname: string.isRequired
     }).isRequired
 };
 

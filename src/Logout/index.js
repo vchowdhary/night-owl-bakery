@@ -36,8 +36,8 @@ function Logout(props) {
                 console.log(err);
             }
         }}>
-        Log out&nbsp;
         <Octicon icon={SignOut} />
+        &nbsp;Log out
     </button>;
 }
 

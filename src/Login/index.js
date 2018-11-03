@@ -62,7 +62,7 @@ export default class Login extends React.Component {
         const { loading, redirect, message } = this.state;
 
         const locationState = location.state || {
-            referer: { pathname: '/' }
+            referer: { pathname: location.pathname }
         };
 
         const { referer } = locationState;
@@ -163,7 +163,8 @@ Login.propTypes = {
             referer: shape({
                 pathname: string.isRequired
             }).isRequired
-        })
+        }),
+        pathname: string.isRequired
     }).isRequired,
     history: shape({
         push: func.isRequired
