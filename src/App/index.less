@@ -125,18 +125,6 @@ button[type=submit], input[type=submit] {
     .canDisable();
 }
 
-div[role=group] {
-    display: flex;
-
-    > * {
-        flex: 1;
-
-        &:not(:first-child) {
-            margin-inline-start: @spacing-x;
-        }
-    }
-}
-
 :global(#app) {
     min-height: 100vh;
     display: flex;

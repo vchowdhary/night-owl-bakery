@@ -21,9 +21,11 @@ import styles from './index.less';
 export default class Login extends React.Component {
     /**
      * Initializes the component.
+     *
+     * @param {Object} props - The component's props.
      */
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         const { loggedIn } = User;
 
