@@ -54,7 +54,7 @@ function Account() {
     let menu;
     if (User.loggedIn) {
         menu = [
-            <ButtonLink key="profile" to="/profile">
+            <ButtonLink key="profile" to="/profile/">
                 <Octicon icon={Person} />
                 &nbsp;My Profile
             </ButtonLink>,

@@ -5,49 +5,42 @@
  */
 
 import React from 'react';
-import { string, shape, func } from 'prop-types';
+import { shape, func, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Octicon, { SignOut } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 
 /**
- * Logout React component.
+ * Logout button.
  *
- * @alias module:src/Logout
+ * @alias module:src/routes/logout
  *
  * @param {Object} props - The component's props.
- * @param {string} [props.className] - Button class.
- * @param {Object} props.history - Router history.
  * @returns {ReactElement} The component's elements.
  */
 function Logout(props) {
-    const { className, history } = props;
+    const { history, className } = props;
 
     return <button
         className={className}
         disabled={!User.loggedIn}
         onClick={async() => {
-            try {
-                await User.logout();
-
-                history.go(0);
-            } catch (err) {
-                console.log(err);
-            }
-        }}>
+            await User.logout();
+            history.go(0);
+        }}
+    >
         <Octicon icon={SignOut} />
         &nbsp;Log out
     </button>;
 }
 
 Logout.propTypes = {
-    className: string,
     history: shape({
-        push: func.isRequired
-    }).isRequired
+        go: func.isRequired
+    }).isRequired,
+    className: string
 };
 
-const LogoutWithRouter = withRouter(Logout);
-export default LogoutWithRouter;
+export default withRouter(Logout);
 
