@@ -33,13 +33,19 @@ export default class Login extends React.Component {
         this.state = {
             loading,
             redirect,
+            username: '',
+            password: '',
             message: null
         };
 
-        this.inputs = {
-            username: null,
-            password: null
-        };
+        [
+            'onSubmit',
+            'onUsernameChange',
+            'onPasswordChange',
+            'onSignupClick'
+        ].forEach(key => {
+            this[key] = this[key].bind(this);
+        });
 
         if (loading) {
             (async() => {
@@ -53,21 +59,97 @@ export default class Login extends React.Component {
     }
 
     /**
+     * The current location state.
+     *
+     * @private
+     * @readonly
+     * @type {Object}
+     */
+    get locationState() {
+        const { location } = this.props;
+
+        return location.state || {
+            referer: { pathname: location.pathname }
+        };
+    }
+
+    /**
+     * Handles form submission.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onSubmit(event) {
+        event.preventDefault();
+
+        const { username, password } = this.state;
+
+        this.setState({ loading: true, password: '' });
+        this.login(username, password);
+    }
+
+    /**
+     * Handles username change.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onUsernameChange(event) {
+        this.setState({ username: event.target.value });
+    }
+
+    /**
+     * Handles password change.
+     *
+     * @private
+     *
+     * @param {Event} event - The event.
+     */
+    onPasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+
+    /**
+     * Handles signup click.
+     *
+     * @private
+     */
+    onSignupClick() {
+        const { history } = this.props;
+        const { referer } = this.locationState;
+
+        const { username, password } = this.state;
+        history.push('/signup/', {
+            referer, username, password
+        });
+    }
+
+    /**
      * Renders the component.
      *
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { className, onClick, location, history } = this.props;
-        const { loading, redirect, message } = this.state;
+        const {
+            onSubmit,
+            onUsernameChange,
+            onPasswordChange,
+            onSignupClick
+        } = this;
 
-        const locationState = location.state || {
-            referer: { pathname: location.pathname }
-        };
+        const {
+            className, onClick
+        } = this.props;
 
-        const { referer } = locationState;
+        const {
+            loading, redirect, message,
+            username, password
+        } = this.state;
 
         if (redirect) {
+            const { referer } = this.locationState;
             return <Redirect to={referer} />;
         }
 
@@ -76,32 +158,24 @@ export default class Login extends React.Component {
         return <form
             className={classes}
             onClick={onClick}
-            onSubmit={event => {
-                event.preventDefault();
-
-                const { username, password } = this.inputs;
-                const usernameValue = username.value;
-                const passwordValue = password.value;
-                password.value = '';
-
-                this.setState({ loading: true });
-                this.login(usernameValue, passwordValue);
-            }}
+            onSubmit={onSubmit}
         >
             {loading ? <Spinner /> : null}
             <input
                 type="username"
-                ref={input => (this.inputs.username = input)}
                 placeholder="Username"
                 required={true}
                 disabled={loading}
+                value={username}
+                onChange={onUsernameChange}
             />
             <input
                 type="password"
-                ref={input => (this.inputs.password = input)}
                 placeholder="Password"
                 required={true}
                 disabled={loading}
+                value={password}
+                onChange={onPasswordChange}
             />
             <button
                 type="submit"
@@ -112,14 +186,7 @@ export default class Login extends React.Component {
             </button>
             <button
                 disabled={loading}
-                onClick={() => {
-                    const { inputs } = this;
-                    const username = inputs.username.value;
-                    const password = inputs.password.value;
-                    history.push('/signup/', {
-                        referer, username, password
-                    });
-                }}
+                onClick={onSignupClick}
             >
                 <Octicon icon={Plus} />
                 &nbsp;Sign up
