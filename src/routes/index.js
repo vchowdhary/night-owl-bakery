@@ -16,31 +16,35 @@ import styles from './index.less';
  */
 function Home() {
     return <div className={styles.home}>
-        <section className={styles.hero}>
-            <div className={styles.logo} />
+        <section className={styles.logo} />
+        <section className={styles.hero1}>
+            <h1>
+                We bake good into our com&shy;mu&shy;ni&shy;ty.
+            </h1>
         </section>
-        <section>
-            <h1>Welcome to the Bakery!</h1>
+        <article>
             <p>
-                Established in 2019, the Night Owl Bakery is In autem ut fugit
-                et omnis ut animi quia. Non facilis pariatur fugiat eaque. Sit
-                nihil quia aut ipsum non eum magni deserunt.
-            </p>
-        </section>
-        <section>
-            <h2>Who are the Bakers?</h2>
-            <p>
-                Vel rerum incidunt ut molestias at quia iure. Commodi
-                exercitationem harum repellat sit. Labore dolor voluptatem qui
-                neque velit dolores vero deserunt. Ex veniam eius maiores.
-                Deserunt pariatur sit harum ea saepe qui et.
+                Night Owl Bakery is a new workforce development program for
+                at-risk young adults who have yet to realize their full
+                potential and self-worth.
             </p>
             <p>
-                Id quas possimus nihil ut sed rem numquam. Dignissimos enim ex
-                cupiditate vel minima. Nesciunt harum quos ex. Dolore sit
-                accusamus eos laudantium nam placeat.  In voluptas cum illum
-                sequi et dicta.
+                By offering experiences that combine food, entrepreneurship, and
+                sustainability, participants learn vital skills for long-term
+                economic independence.
             </p>
+            <p>
+                Ultimately, the program is designed to prepare participants for
+                the future so they can experience a fuller sense of who they
+                are, what they are a part of, and that they are capable of
+                joining the workforce prepared.
+            </p>
+        </article>
+        <section className={styles.hero2}>
+            <h1>
+                Our secret in&shy;gre&shy;di&shy;ent is com&shy;mu&shy;ni&shy;ty
+                em&shy;pow&shy;er&shy;ment.
+            </h1>
         </section>
     </div>;
 }

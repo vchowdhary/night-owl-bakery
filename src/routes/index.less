@@ -1,42 +1,53 @@
 @import '~src/definitions';
 
+@height-hero: 66vh;
+@font-size-hero: 5vh;
+
 div.home {
     display: flex;
     flex-flow: column nowrap;
     max-width: unset;
     margin: 0;
 
-    > section {
+    > * {
         display: flex;
         flex-flow: column;
         align-items: center;
+        justify-content: center;
 
         padding: @spacing-y @spacing-x;
-
-        &.hero {
-            padding-left: 0;
-            padding-right: 0;
-
-            > .logo {
-                @height-logo: 66vh;
-
-                height: @height-logo;
-                width: 100%;
-
-                background-repeat: no-repeat;
-                background-size: auto @height-logo;
-                background-position: center;
-                background-image: url('/images/logo.svg');
-            }
-        }
 
         > * {
             max-width: @width-container-max;
         }
+    }
 
-        &:nth-child(odd) {
+    > section {
+        height: @height-hero;
+
+        font-size: @font-size-hero;
+        color: @color-bg;
+        text-shadow: @box-shadow;
+
+        background-repeat: no-repeat;
+
+        &.logo {
+            background-position: center;
+            background-size: auto @height-hero;
+            background-image: url('/images/logo.svg');
             background-color: @color-primary;
-            color: @color-text-bg-primary;
+        }
+
+        &.hero1, &.hero2 {
+            background-size: cover;
+        }
+
+        &.hero1 {
+            background-image: url('/images/hero1.png');
+        }
+
+        &.hero2 {
+            background-image: url('/images/hero2.png');
         }
     }
 }
