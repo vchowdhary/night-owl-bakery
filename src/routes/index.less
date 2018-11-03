@@ -1,8 +1,34 @@
 @import '~src/definitions';
 
-.home {
-    .logo {
+div.home {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: unset;
+    margin: 0;
 
+    > section {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+
+        padding: @spacing-y @spacing-x;
+
+        &.hero {
+            height: 80vh;
+
+            > img {
+                height: 100%;
+            }
+        }
+
+        > * {
+            max-width: @width-container-max;
+        }
+
+        &:nth-child(odd) {
+            background-color: @color-primary;
+            color: @color-text-bg-primary;
+        }
     }
 }
 

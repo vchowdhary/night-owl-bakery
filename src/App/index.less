@@ -15,10 +15,18 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-    margin: @spacing-y 0;
+h1, h2, h3 {
+    margin: @spacing-y 0 2 * @spacing-y;
     margin-block-start: 0;
     margin-block-end: 0;
+
+    &, h4, h5, h6, p {
+        margin: @spacing-y 0;
+    }
+
+    .media-screen-md({
+        text-align: center;
+    });
 }
 
 form {
@@ -106,13 +114,16 @@ fieldset {
         flex: 1;
         display: flex;
         flex-flow: column nowrap;
+        align-items: center;
 
         width: 100%;
-        max-width: @width-container-max;
-
-        margin: @spacing-y auto;
-        padding: 0 @spacing-x;
         box-sizing: border-box;
+
+        > * {
+            width: 100%;
+            max-width: @width-container-max;
+            margin: @spacing-y @spacing-x;
+        }
     }
 }
 

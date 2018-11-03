@@ -5,6 +5,7 @@
  */
 
 import Login from 'src/Login';
+import { hot } from 'react-hot-loader';
 
-export default Login;
+export default hot(module)(Login);
 

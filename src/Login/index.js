@@ -8,6 +8,7 @@ import React from 'react';
 import { func, shape, string } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Octicon, { SignIn, Plus } from '@githubprimer/octicons-react';
+import classNames from 'classnames';
 
 import User from 'src/User';
 import Spinner from 'src/Spinner';
@@ -59,7 +60,7 @@ export default class Login extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { onClick, location, history } = this.props;
+        const { className, onClick, location, history } = this.props;
         const { loading, redirect, message } = this.state;
 
         if (redirect) {
@@ -69,8 +70,10 @@ export default class Login extends React.Component {
             return <Redirect to={referer} />;
         }
 
+        const classes = classNames(styles.login, className);
+
         return <form
-            className={styles.login}
+            className={classes}
             onClick={onClick}
             onSubmit={async(event) => {
                 event.preventDefault();
@@ -150,6 +153,7 @@ export default class Login extends React.Component {
 }
 
 Login.propTypes = {
+    className: string,
     onClick: func,
     location: shape({
         state: shape({
