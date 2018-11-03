@@ -1,26 +1,27 @@
 /**
- * Site-wide login page.
+ * Signup page.
  *
- * @module src/Login
+ * @module src/routes/signup
  */
 
 import React from 'react';
-import { func, shape, string } from 'prop-types';
+import { hot } from 'react-hot-loader';
+import { shape, string } from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Octicon, { SignIn, Plus } from '@githubprimer/octicons-react';
-import classNames from 'classnames';
+import Octicon, { Plus } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
-import Spinner from 'src/Spinner';
 
 import styles from './index.less';
 
 /**
- * Login React component.
+ * Signup form.
+ *
+ * @alias module:src/routes/signup
  */
-export default class Login extends React.Component {
+class Signup extends React.Component {
     /**
-     * Initializes the component.
+     * Initializes the signup form.
      */
     constructor() {
         super();
@@ -58,41 +59,40 @@ export default class Login extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { className, onClick, location, history } = this.props;
+        const { location } = this.props;
         const { loading, redirect, message } = this.state;
 
         const locationState = location.state || {
             referer: { pathname: '/' }
         };
 
-        const { referer } = locationState;
-
         if (redirect) {
+            const { referer } = locationState;
             return <Redirect to={referer} />;
         }
 
-        const classes = classNames(styles.login, className);
-
         return <form
-            className={classes}
-            onClick={onClick}
+            className={styles.signup}
             onSubmit={async(event) => {
                 event.preventDefault();
 
-                const { username, password } = this.inputs;
-                const usernameValue = username.value;
-                const passwordValue = password.value;
-                password.value = '';
+                const {
+                    username,
+                    password
+                } = this.inputs;
 
                 this.setState({ loading: true });
-                await this.login(usernameValue, passwordValue);
+                await this.signup(
+                    username.value,
+                    password.value
+                );
                 this.setState({ loading: false });
             }}
         >
-            {loading ? <Spinner /> : null}
             <input
                 type="username"
                 ref={input => (this.inputs.username = input)}
+                defaultValue={locationState.username}
                 placeholder="Username"
                 required={true}
                 disabled={loading}
@@ -100,76 +100,63 @@ export default class Login extends React.Component {
             <input
                 type="password"
                 ref={input => (this.inputs.password = input)}
+                defaultValue={locationState.password}
                 placeholder="Password"
                 required={true}
                 disabled={loading}
             />
-            <div role="group">
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    <Octicon icon={SignIn} />
-                    &nbsp;Log in
-                </button>
-                <button
-                    disabled={loading}
-                    onClick={() => {
-                        const { inputs } = this;
-                        const username = inputs.username.value;
-                        const password = inputs.password.value;
-                        history.push('/signup/', {
-                            referer, username, password
-                        });
-                    }}
-                >
-                    <Octicon icon={Plus} />
-                    &nbsp;Sign up
-                </button>
-            </div>
+            <button
+                type="submit"
+                disabled={loading}
+            >
+                <Octicon icon={Plus} />
+                &nbsp;Sign up
+            </button>
             {message}
         </form>;
     }
 
     /**
-     * Attempts to log in with the given credentials.
+     * Attempts to sign up with the given information.
      *
      * @param {string} username - The username.
      * @param {string} password - The password.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if
      * an error was handled.
      */
-    async login(username, password) {
+    async signup(username, password) {
         try {
-            await User.login(username, password);
+            void username;
+            void password;
+            throw new Error('Unimplemented!');
 
+            /*
             this.setState({ redirect: true, message: null });
 
             return null;
+            */
         } catch (err) {
             const message = <p className={styles.error}>
-                Login failed: {err.message}
+                Signup failed: {err.message}
             </p>;
 
             this.setState({ message });
-
             return err;
         }
     }
 }
 
-Login.propTypes = {
-    className: string,
-    onClick: func,
+Signup.propTypes = {
     location: shape({
         state: shape({
             referer: shape({
                 pathname: string.isRequired
-            }).isRequired
+            }).isRequired,
+            username: string,
+            password: string
         })
-    }).isRequired,
-    history: shape({
-        push: func.isRequired
     }).isRequired
 };
+
+export default hot(module)(Signup);
 
