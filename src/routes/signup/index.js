@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom';
 import User from 'src/User';
 
 import Basic from './Basic';
+import Profile from './Profile';
 import Account from './Account';
 
 import styles from './index.less';
@@ -109,6 +110,9 @@ class Signup extends React.Component {
 
         return <div className={styles.signup}>
             <Basic
+                disabled={loading}
+            />
+            <Profile
                 disabled={loading}
             />
             <Account

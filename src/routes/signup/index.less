@@ -2,7 +2,20 @@
 
 .signup {
     > *:not(:last-child) {
-        margin-block-end: @spacing-y;
+        margin-block-end: 4 * @spacing-y;
+    }
+
+    form {
+        > section {
+            display: flex;
+            flex-flow: row nowrap;
+
+            > img {
+                width: 8 * @spacing-x;
+                height: auto;
+                margin-right: @spacing-x;
+            }
+        }
     }
 
     .error {

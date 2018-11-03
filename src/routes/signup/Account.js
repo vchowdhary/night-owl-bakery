@@ -10,6 +10,8 @@ import Octicon, { Plus } from '@githubprimer/octicons-react';
 
 import LabeledInput from 'src/LabeledInput';
 
+import logoImage from 'public/images/logo-notext.svg';
+
 /**
  * Maximum username length.
  *
@@ -118,6 +120,13 @@ class SignupAccount extends React.Component {
         } = this.state;
 
         return <form onSubmit={onSubmit}>
+            <section>
+                <img src={logoImage} />
+                <div>
+                    <h4>Finally, let&rsquo;s set up your account.</h4>
+                    <h5>Welcome to the Bakery!</h5>
+                </div>
+            </section>
             <LabeledInput
                 type="username"
                 label="Username"

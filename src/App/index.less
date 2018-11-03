@@ -64,9 +64,24 @@ form {
     }
 }
 
+textarea {
+    padding: @spacing-y @spacing-x;
+    resize: none;
+
+    background: none;
+    border: @border;
+    transition: border @duration-transition;
+
+    &:focus {
+        border: @border-primary;
+        border-width: 1px;
+    }
+}
+
 input[type=text],
 input[type=username],
 input[type=password],
+input[type=number],
 input[type=tel] {
     padding: @spacing-y @spacing-x;
     background: none;

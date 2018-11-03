@@ -2,25 +2,16 @@
 
 label.label {
     display: flex;
+    flex-flow: row wrap;
     align-items: baseline;
 
-    > .label {
-        flex: 0.25;
-        text-align: end;
-        white-space: nowrap;
-
-        &.required::after {
-            content: '*';
-            color: red;
-        }
+    > .required::after {
+        content: '*';
+        color: red;
     }
 
-    > * {
+    > input {
         flex: 1;
-
-        &:not(:first-child) {
-            margin-inline-start: @spacing-x;
-        }
     }
 }
 

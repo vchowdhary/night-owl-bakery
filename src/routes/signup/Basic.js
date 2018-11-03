@@ -10,7 +10,6 @@ import { bool } from 'prop-types';
 import LabeledInput from 'src/LabeledInput';
 
 import logoImage from 'public/images/logo-notext.svg';
-import styles from './index.less';
 
 /**
  * Maximum text field length.
@@ -114,16 +113,16 @@ class SignupBasic extends React.Component {
             zipCode
         } = this.state;
 
-        return <form className={styles.basic}>
-            <div className={styles.header}>
+        return <form>
+            <section>
                 <img src={logoImage} />
                 <div>
                     <h4>Let&rsquo;s get started.</h4>
                     <h5>
-                        First, we&rsquo;ll need some basic profile information.
+                        First, we&rsquo;ll need some basic information.
                     </h5>
                 </div>
-            </div>
+            </section>
             <div role="group">
                 <LabeledInput
                     type="text"
@@ -148,6 +147,7 @@ class SignupBasic extends React.Component {
                 <LabeledInput
                     type="tel"
                     label="Phone #"
+                    placeholder="123-456-7890"
                     maxLength={TEXT_MAXLEN}
                     disabled={disabled}
                     value={phone}
@@ -156,6 +156,7 @@ class SignupBasic extends React.Component {
                 <LabeledInput
                     type="text"
                     label="ZIP code"
+                    placeholder="15222"
                     maxLength={TEXT_MAXLEN}
                     disabled={disabled}
                     value={zipCode}
