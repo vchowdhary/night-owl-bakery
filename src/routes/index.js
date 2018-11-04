@@ -41,12 +41,6 @@ function Home() {
                 joining the workforce prepared.
             </p>
         </article>
-        <section className={styles.hero2}>
-            <h1>
-                Our secret in&shy;gre&shy;di&shy;ent is com&shy;mu&shy;ni&shy;ty
-                em&shy;pow&shy;er&shy;ment.
-            </h1>
-        </section>
         <article>
             <h3>
                 One cookie, one connection.
@@ -69,6 +63,12 @@ function Home() {
                 Join Us
             </ButtonLink>
         </article>
+        <section className={styles.hero2}>
+            <h1>
+                Our secret in&shy;gre&shy;di&shy;ent is com&shy;mu&shy;ni&shy;ty
+                em&shy;pow&shy;er&shy;ment.
+            </h1>
+        </section>
         <section className={styles.logo} />
     </div>;
 }
