@@ -59,7 +59,10 @@ function Home() {
                 bakers and hungry, community-oriented individuals like you. Join
                 our movement below!
             </p>
-            <ButtonLink key="signup" to="/signup/">
+            <ButtonLink to={{
+                pathname: '/signup/',
+                state: { referer: { pathname: '/' } }
+            }}>
                 Join Us
             </ButtonLink>
         </article>
