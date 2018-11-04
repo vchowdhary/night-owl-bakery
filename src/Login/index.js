@@ -48,15 +48,18 @@ export default class Login extends React.Component {
         ].forEach(key => {
             this[key] = this[key].bind(this);
         });
+    }
 
-        if (loading) {
-            (async() => {
-                await User.refreshLoginStatus();
-                this.setState({
-                    loading: false,
-                    redirect: User.loggedIn
-                });
-            })();
+    /**
+     * React lifecycle handler called when component has been mounted.
+     */
+    async componentDidMount() {
+        if (this.state.loading) {
+            await User.refreshLoginStatus();
+            this.setState({
+                loading: false,
+                redirect: User.loggedIn
+            });
         }
     }
 
