@@ -6,12 +6,31 @@
 
 import React from 'react';
 import { string } from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
 import XHRpromise from 'src/XHRpromise';
 import Spinner from 'src/Spinner';
 
 import styles from './index.less';
+
+/**
+ * Calendar months.
+ *
+ * @type {string[]}
+ */
+const MONTHS = Object.freeze([
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]);
 
 /**
  * User profile.
@@ -91,11 +110,40 @@ class Profile extends React.Component {
         }
 
         if (error) {
-            return <Redirect to="/404/" />;
+            return <div>
+                <h1>404 - Not Found</h1>
+                <p>The user &quot;{this.props.id}&quot; does not exist.</p>
+            </div>;
         }
 
+        const {
+            nameFirst,
+            nameLast,
+            occupation,
+            birthMonth,
+            weekendActivity,
+            favoriteFood,
+            likeToWatch,
+            pittsburghFavorite,
+            origin,
+            lifeMotto,
+            bio
+        } = profile;
+
         return <div className={styles.profile}>
-            <h1>{profile.nameFirst} {profile.nameLast}</h1>
+            <h1>{nameFirst} {nameLast}</h1>
+            <ul>
+                <li>Occupation: {occupation}</li>
+                <li>Birth month: {MONTHS[birthMonth - 1]}</li>
+                <li>Favorite weekend activity: {weekendActivity}</li>
+                <li>Favorite food: {favoriteFood}</li>
+                <li>Likes to watch: {likeToWatch}</li>
+                <li>Favorite thing about Pittsburgh: {pittsburghFavorite}</li>
+                <li>From: {origin}</li>
+                <li>Life motto: &quot;{lifeMotto}&quot;</li>
+            </ul>
+            <h3>About me</h3>
+            <p className={styles.bio}>{bio}</p>
         </div>;
     }
 }
