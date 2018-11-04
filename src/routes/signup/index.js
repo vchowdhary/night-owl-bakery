@@ -88,13 +88,13 @@ class Signup extends React.Component {
      * @private
      */
     onAccountSubmit() {
-        const { username, password, ...data } = this.state;
-        delete data.loading;
-        delete data.redirect;
-        delete data.message;
+        const { username, password, ...profile } = this.state;
+        delete profile.loading;
+        delete profile.redirect;
+        delete profile.message;
 
         this.setState({ loading: true });
-        this.signup(username, password, data);
+        this.signup(username, password, profile);
     }
 
     /**
@@ -159,13 +159,13 @@ class Signup extends React.Component {
      * @private
      * @param {string} username - The username.
      * @param {string} password - The password.
-     * @param {Object} data - Other account information.
+     * @param {Object} profile - Profile information.
      * @returns {Promise} Resolves with `null` on success, or with an `Error` if
      * an error was handled.
      */
-    async signup(username, password, data) {
+    async signup(username, password, profile) {
         try {
-            await User.signup(username, password, data);
+            await User.signup(username, password, profile);
 
             this.setState({ loading: false, redirect: true, message: null });
 

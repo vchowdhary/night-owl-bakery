@@ -234,10 +234,11 @@ class User {
      *
      * @param {string} id - The login ID.
      * @param {string} password - The password.
+     * @param {string} profile - Profile information.
      * @returns {Promise} Resolves with the user instance on success, or rejects
      * with an error.
      */
-    signup(id, password) {
+    signup(id, password, profile) {
         if (this._signupPromise) {
             return this._signupPromise;
         }
@@ -248,7 +249,7 @@ class User {
             try {
                 const { status, response } = await XHRpromise('PUT', reqURL, {
                     contentType: 'application/json',
-                    body: JSON.stringify({ password })
+                    body: JSON.stringify({ password, profile })
                 });
 
                 switch (status) {
