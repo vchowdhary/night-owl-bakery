@@ -54,13 +54,15 @@ export default class Login extends React.Component {
      * React lifecycle handler called when component has been mounted.
      */
     async componentDidMount() {
-        if (this.state.loading) {
-            await User.refreshLoginStatus();
-            this.setState({
-                loading: false,
-                redirect: User.loggedIn
-            });
+        if (!this.state.loading) {
+            return;
         }
+
+        await User.refreshLoginStatus();
+        this.setState({
+            loading: false,
+            redirect: User.loggedIn
+        });
     }
 
     /**
