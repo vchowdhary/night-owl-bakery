@@ -36,14 +36,22 @@ class Signup extends React.Component {
         const loading = loggedIn === null;
         const redirect = loggedIn === true;
 
+        const {
+            username,
+            password
+        } = this.locationState;
+
         this.state = {
             loading,
             redirect,
-            message: null
+            message: null,
+            username,
+            password
         };
 
         [
-            'onAccountSubmit'
+            'onAccountSubmit',
+            'onChange'
         ].forEach(key => {
             this[key] = this[key].bind(this);
         });
@@ -57,19 +65,6 @@ class Signup extends React.Component {
                 });
             })();
         }
-    }
-
-    /**
-     * Handles account form submission.
-     *
-     * @private
-     * @param {string} username - The username.
-     * @param {string} password - The password.
-     */
-    onAccountSubmit(username, password) {
-        const { data } = this.state;
-        this.setState({ loading: true });
-        this.signup(username, password, data);
     }
 
     /**
@@ -88,6 +83,32 @@ class Signup extends React.Component {
     }
 
     /**
+     * Handles account form submission.
+     *
+     * @private
+     */
+    onAccountSubmit() {
+        const { username, password, ...data } = this.state;
+        delete data.loading;
+        delete data.redirect;
+        delete data.message;
+
+        this.setState({ loading: true });
+        this.signup(username, password, data);
+    }
+
+    /**
+     * Handles changes in form data.
+     *
+     * @private
+     * @param {string} key - The changed key.
+     * @param {string} value - The new value.
+     */
+    onChange(key, value) {
+        this.setState({ [key]: value });
+    }
+
+    /**
      * Renders the component.
      *
      * @returns {ReactElement} The component's elements.
@@ -99,28 +120,35 @@ class Signup extends React.Component {
         }
 
         const {
-            locationState,
-            onAccountSubmit
+            onAccountSubmit,
+            onChange
         } = this;
 
         const {
             loading,
-            message
+            message,
+            ...data
         } = this.state;
+
+        delete data.redirect;
 
         return <div className={styles.signup}>
             <Basic
                 disabled={loading}
+                onChange={onChange}
+                {...data}
             />
             <Profile
                 disabled={loading}
+                onChange={onChange}
+                {...data}
             />
             <Account
-                defaultUsername={locationState.username}
-                defaultPassword={locationState.password}
                 disabled={loading}
                 onSubmit={onAccountSubmit}
+                onChange={onChange}
                 message={message}
+                {...data}
             />
         </div>;
     }

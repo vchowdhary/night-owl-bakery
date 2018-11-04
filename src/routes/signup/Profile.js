@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, string, func } from 'prop-types';
 
 import LabeledInput from 'src/LabeledInput';
 
@@ -63,68 +63,64 @@ const FIELDS = Object.freeze([{
 }]);
 
 /**
+ * Creates a change handler for the given key.
+ *
+ * @private
+ * @param {Function} onChange - The handler to call.
+ * @param {string} key - The key.
+ * @returns {Function} The wrapped change handler.
+ */
+function handleChange(onChange, key) {
+    return function(event) {
+        onChange(key, event.target.value);
+    };
+}
+
+/**
  * Profile form.
  *
  * @alias module:src/routes/signup/Profile
+ *
+ * @param {Object} props - The component's props.
+ * @returns {ReactElement} The component's elements.
  */
-class SignupProfile extends React.Component {
-    /**
-     * Initializes the component.
-     *
-     * @param {Object} props - The component's props.
-     */
-    constructor(props) {
-        super(props);
+function SignupProfile(props) {
+    const { disabled, onChange } = props;
 
-        this.state = {};
-    }
+    const inputs = FIELDS.map(function({ name, ...rest }) {
+        return <LabeledInput
+            key={name}
+            disabled={disabled}
+            onChange={handleChange(onChange, name)}
+            {...rest}
+        />;
+    });
 
-    /**
-     * Renders the component.
-     *
-     * @returns {ReactElement} The component's elements.
-     */
-    render() {
-        const { disabled } = this.props;
-
-        const inputs = FIELDS.map(({
-            name, ...rest
-        }) => {
-            const onChange = event => {
-                this.setState({ [name]: event.target.value });
-            };
-
-            return <LabeledInput
-                key={name}
-                disabled={disabled}
-                onChange={onChange}
-                {...rest}
-            />;
-        });
-
-        return <form>
-            <section>
-                <img src={logoImage} />
-                <div>
-                    <h4>Now, let&rsquo;s get personal.</h4>
-                    <h5>
-                        To spark conversation between our bakers and you, tell
-                        us a little about yourself below.
-                    </h5>
-                </div>
-            </section>
-            {inputs}
-            <h4>Tell us more about yourself:</h4>
-            <textarea onChange={event => {
-                this.setState({ bio: event.target.value });
-            }} />
-        </form>;
-    }
+    return <form>
+        <section>
+            <img src={logoImage} />
+            <div>
+                <h4>Now, let&rsquo;s get personal.</h4>
+                <h5>
+                    To spark conversation between our bakers and you, tell
+                    us a little about yourself below.
+                </h5>
+            </div>
+        </section>
+        {inputs}
+        <h4>Tell us more about yourself:</h4>
+        <textarea onChange={handleChange(onChange, 'bio')} />
+    </form>;
 }
 
 SignupProfile.propTypes = {
-    disabled: bool
+    disabled: bool,
+    onChange: func.isRequired
 };
+
+FIELDS.forEach(function({ name }) {
+    SignupProfile.propTypes[name] = string;
+});
 
 export default SignupProfile;
 
