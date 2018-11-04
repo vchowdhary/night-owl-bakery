@@ -96,6 +96,7 @@ function SignupBasic(props) {
                 type="text"
                 label="ZIP code"
                 placeholder="15222"
+                pattern="^\d{5}(?:-\d{4})?$"
                 maxLength={TEXT_MAXLEN}
                 disabled={disabled}
                 value={zipCode}
