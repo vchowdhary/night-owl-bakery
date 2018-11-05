@@ -41,7 +41,7 @@ const FIELDS = Object.freeze([{
     type: 'text',
     maxLength: TEXT_MAXLEN,
     label: 'My occupation is',
-    placeholder: 'baker'
+    placeholder: 'student'
 }, {
     name: 'birthMonth',
     type: 'number',
