@@ -54,31 +54,7 @@ class User {
              * @private
              * @type {Promise?}
              */
-            _refreshLoginStatusPromise: { value: null, writable: true },
-
-            /**
-             * The current login promise, or `null`.
-             *
-             * @private
-             * @type {Promise?}
-             */
-            _loginPromise: { value: null, writable: true },
-
-            /**
-             * The current logout promise, or `null`.
-             *
-             * @private
-             * @type {Promise?}
-             */
-            _logoutPromise: { value: null, writable: true },
-
-            /**
-             * The current signup promise, or `null`.
-             *
-             * @private
-             * @type {Promise?}
-             */
-            _signupPromise: { value: null, writable: true }
+            _refreshLoginStatusPromise: { value: null, writable: true }
         });
     }
 
@@ -152,124 +128,107 @@ class User {
     /**
      * Attempts to log in.
      *
-     * If an existing login request is in progress, its promise is returned
-     * instead.
-     *
      * @param {string} id - The login ID.
      * @param {string} password - The password.
-     * @returns {Promise} Resolves with the user instance on success, or rejects
-     * with an error.
+     * @returns {module:src/User} Resolves with the user instance on success, or
+     * rejects with an error.
      */
-    login(id, password) {
-        if (this._loginPromise) {
-            return this._loginPromise;
+    async login(id, password) {
+        if (this.loggedIn) {
+            return this;
         }
 
-        this._loginPromise = (async() => {
-            try {
-                if (this.loggedIn) {
-                    return this;
-                }
+        const { status } = await XHRpromise('PUT', API, {
+            contentType: 'application/json',
+            body: JSON.stringify({ id, password })
+        });
 
-                const { status } = await XHRpromise('PUT', API, {
-                    contentType: 'application/json',
-                    body: JSON.stringify({ id, password })
-                });
+        switch (status) {
+            case 200:
+            case 204:
+                break;
+            case 401:
+                throw new Error('Incorrect username/password.');
+            default:
+                throw new Error('Unknown error occurred.');
+        }
 
-                switch (status) {
-                    case 200:
-                    case 204:
-                        break;
-                    case 401:
-                        throw new Error('Incorrect username/password.');
-                    default:
-                        throw new Error('Unknown error occurred.');
-                }
-
-                this._id = id;
-            } finally {
-                this._loginPromise = null;
-            }
-
-            return this;
-        })();
-        return this._loginPromise;
+        this._id = id;
+        return this;
     }
 
     /**
      * Attempts to log out.
      *
-     * If an existing logout request is in progress, its promise is returned
-     * instead.
-     *
-     * @returns {Promise} Resolves with the user instance on success, or rejects
-     * with an error.
+     * @returns {module:src/User} Resolves with the user instance on success, or
+     * rejects with an error.
      */
-    logout() {
-        if (this._logoutPromise) {
-            return this._logoutPromise;
-        }
+    async logout() {
+        await XHRpromise('DELETE', API, {
+            successStatus: 204
+        });
 
-        this._logoutPromise = (async() => {
-            try {
-                await XHRpromise('DELETE', API, {
-                    successStatus: 204
-                });
-
-                this._id = false;
-            } finally {
-                this._logoutPromise = null;
-            }
-
-            return this;
-        })();
-        return this._logoutPromise;
+        this._id = false;
+        return this;
     }
 
     /**
      * Attempts to sign up a new user.
      *
-     * If an existing signup request is in progress, its promise is returned
-     * instead.
-     *
      * @param {string} id - The login ID.
      * @param {string} password - The password.
      * @param {string} profile - Profile information.
-     * @returns {Promise} Resolves with the user instance on success, or rejects
-     * with an error.
+     * @returns {module:src/User} Resolves with the user instance on success, or
+     * rejects with an error.
      */
-    signup(id, password, profile) {
-        if (this._signupPromise) {
-            return this._signupPromise;
+    async signup(id, password, profile) {
+        const reqURL = `${API}/${encodeURIComponent(id)}`;
+
+        const { status, response } = await XHRpromise('PUT', reqURL, {
+            contentType: 'application/json',
+            body: JSON.stringify({ password, profile })
+        });
+
+        switch (status) {
+            case 200:
+            case 201:
+                break;
+            case 400:
+                throw new Error(response);
+            default:
+                throw new Error('Unknown error occurred.');
+        }
+
+        this._id = id;
+        return this;
+    }
+
+    /**
+     * Attempts to delete the logged-in user.
+     *
+     * @returns {module:src/User} Resolves with the user instance on success, or
+     * rejects with an error.
+     */
+    async delete() {
+        const id = this._id;
+        if (!id) {
+            throw new Error('Cannot delete account while not logged in!');
         }
 
         const reqURL = `${API}/${encodeURIComponent(id)}`;
 
-        this._signupPromise = (async() => {
-            try {
-                const { status, response } = await XHRpromise('PUT', reqURL, {
-                    contentType: 'application/json',
-                    body: JSON.stringify({ password, profile })
-                });
+        const { status } = await XHRpromise('DELETE', reqURL);
 
-                switch (status) {
-                    case 200:
-                    case 201:
-                        break;
-                    case 400:
-                        throw new Error(response);
-                    default:
-                        throw new Error('Unknown error occurred.');
-                }
+        switch (status) {
+            case 200:
+            case 204:
+                break;
+            default:
+                throw new Error('Unknown error occurred.');
+        }
 
-                this._id = id;
-            } finally {
-                this._signupPromise = null;
-            }
-
-            return this;
-        })();
-        return this._signupPromise;
+        this._id = false;
+        return this;
     }
 }
 

@@ -9,6 +9,7 @@ import { string } from 'prop-types';
 
 import XHRpromise from 'src/XHRpromise';
 import Spinner from 'src/Spinner';
+import Delete from 'src/User/Delete';
 
 import styles from './index.less';
 
@@ -144,6 +145,9 @@ class Profile extends React.Component {
             </ul>
             <h3>About me</h3>
             <p className={styles.bio}>{bio}</p>
+            <div className={styles.danger}>
+                <Delete className={styles.delete} />
+            </div>
         </div>;
     }
 }

@@ -45,12 +45,14 @@ form {
         display: flex;
         flex-flow: row wrap;
 
+        margin-block-start: -@spacing-y;
+        margin-inline-start: -@spacing-x;
+
         > * {
             flex: 1;
 
-            &:not(:last-child) {
-                margin-inline-end: @spacing-y;
-            }
+            margin-block-start: @spacing-y;
+            margin-inline-start: @spacing-x;
         }
     }
 }
@@ -95,6 +97,10 @@ input[type=tel] {
     }
 
     .canDisable();
+
+    .media-screen-sm({
+        padding: (2 * @spacing-y) @spacing-x;
+    });
 }
 
 select {
@@ -137,6 +143,10 @@ button, input[type=submit] {
     }
 
     .canDisable();
+
+    .media-screen-sm({
+        padding: (2 * @spacing-y) @spacing-x;
+    });
 }
 
 button[type=submit], input[type=submit] {

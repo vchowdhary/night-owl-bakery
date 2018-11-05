@@ -63,6 +63,10 @@ function Account() {
     } else {
         menu = [
             <LoginWithRouter key="login" onClick={event => {
+                if (event.target.onclick) {
+                    return;
+                }
+
                 event.stopPropagation();
             }} />
         ];

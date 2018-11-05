@@ -25,7 +25,7 @@ function Logout(props) {
     return <button
         className={className}
         disabled={!User.loggedIn}
-        onClick={async() => {
+        onClick={async function() {
             await User.logout();
             history.go(0);
         }}

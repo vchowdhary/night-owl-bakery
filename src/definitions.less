@@ -6,6 +6,7 @@
 
 @width-container-max: @width-md;
 @height-header: 6 * @spacing-y;
+@height-header-screen-sm: 8 * @spacing-y;
 
 .media-screen-sm(@rules) {
     @media screen and (max-width: @width-sm) {
@@ -31,6 +32,7 @@
 @color-primary: #FEE545;
 @color-bg: white;
 @color-bg-error: #FFBFBF;
+@color-bg-danger: red;
 @color-bg-disabled: rgb(85%, 85%, 85%);
 @color-bg-hover: tint(@color-primary, 25%);
 @color-bg-active: @color-primary;
@@ -52,6 +54,9 @@
 @color-text-bg-error: contrast(
     @color-bg-error, @color-text-dark, @color-text-light
 );
+@color-text-bg-danger: contrast(
+    @color-bg-danger, @color-text-dark, @color-text-light
+);
 @color-text-bg-disabled: contrast(
     @color-bg-disabled, @color-text-dark, @color-text-light
 );
@@ -62,6 +67,44 @@
     border: @border;
     background: @color-bg-error;
     color: @color-text-bg-error;
+}
+
+.modal(@rules) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    background-color: fadeout(black, 25%);
+
+    transition-property: opacity;
+    transition-duration: @duration-enter-exit;
+
+    &.enter, &.exit.exitActive {
+        opacity: 0;
+    }
+
+    &.exit, &.enter.enterActive {
+        opacity: 1;
+    }
+
+    > * {
+        background-color: @color-bg;
+        margin: @spacing-y @spacing-x;
+        padding: @spacing-y @spacing-x;
+
+        > *:not(:last-child) {
+            margin-block-end: @spacing-y;
+        }
+
+        @rules();
+    }
 }
 
 @border: 1px solid fadeout(@color-text, 75%);
