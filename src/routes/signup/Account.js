@@ -7,6 +7,7 @@
 import React from 'react';
 import { func, string, bool, node } from 'prop-types';
 import Octicon, { Plus } from '@githubprimer/octicons-react';
+import escapeStringRegexp from 'escape-string-regexp';
 
 import LabeledInput from 'src/LabeledInput';
 
@@ -91,6 +92,13 @@ function SignupAccount(props) {
             disabled={disabled}
             value={password}
             onChange={handleChange(onChange, 'password')}
+        />
+        <LabeledInput
+            type="password"
+            label="Re-type password"
+            pattern={`^${escapeStringRegexp(password)}$`}
+            required={true}
+            disabled={disabled}
         />
         <button
             type="submit"
