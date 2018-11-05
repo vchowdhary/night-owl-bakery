@@ -1,7 +1,5 @@
 @import '~src/definitions';
 
-@height-header: 4 * @spacing-y;
-
 .logo {
     flex-flow: row nowrap;
 
@@ -42,7 +40,7 @@
 
 
 .header {
-    height: @height-header;
+    height: @height-header - 2 * @spacing-y;
     padding: @spacing-y @spacing-x;
 
     display: flex;

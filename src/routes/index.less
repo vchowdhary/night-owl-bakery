@@ -1,6 +1,6 @@
 @import '~src/definitions';
 
-@height-hero: 75vh;
+@min-height-hero: 75vh;
 @font-size-hero: 5vh;
 
 div.home {
@@ -23,7 +23,7 @@ div.home {
     }
 
     > section {
-        height: @height-hero;
+        min-height: @min-height-hero;
 
         font-size: @font-size-hero;
         color: @color-bg;
@@ -33,7 +33,7 @@ div.home {
 
         &.logo {
             background-position: center;
-            background-size: auto @height-hero;
+            background-size: auto @min-height-hero;
             background-image: url('/images/logo.svg');
             background-color: @color-primary;
         }
