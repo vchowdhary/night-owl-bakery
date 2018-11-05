@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { shape, func, string } from 'prop-types';
+import { shape, func, object, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Octicon, { SignOut } from '@githubprimer/octicons-react';
 
@@ -20,14 +20,14 @@ import User from 'src/User';
  * @returns {ReactElement} The component's elements.
  */
 function Logout(props) {
-    const { history, className } = props;
+    const { history, location, className } = props;
 
     return <button
         className={className}
         disabled={!User.loggedIn}
         onClick={async function() {
             await User.logout();
-            history.go(0);
+            history.replace(location);
         }}
     >
         <Octicon icon={SignOut} />
@@ -37,8 +37,9 @@ function Logout(props) {
 
 Logout.propTypes = {
     history: shape({
-        go: func.isRequired
+        replace: func.isRequired
     }).isRequired,
+    location: object.isRequired,
     className: string
 };
 

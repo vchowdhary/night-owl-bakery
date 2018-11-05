@@ -47,15 +47,20 @@ function Confirmation(props) {
         <div>
             <h1>Are you sure you want to delete your account?</h1>
             <h2>There&rsquo;s no going back!</h2>
-            <form className={styles.buttons} onSubmit={event => {
-                event.preventDefault();
-            }}>
+            <form className={styles.buttons}>
                 <div role="group">
-                    <button onClick={close}>
+                    <button
+                        type="button"
+                        onClick={close}
+                    >
                         <Octicon icon={X} />
                         &nbsp;No, do not delete
                     </button>
-                    <button className={styles.danger} onClick={doDelete}>
+                    <button
+                        type="button"
+                        className={styles.danger}
+                        onClick={doDelete}
+                    >
                         <Octicon icon={Trashcan} />
                         &nbsp;Yes, delete
                     </button>
@@ -91,7 +96,7 @@ function Delete(props) {
      */
     async function doDelete() {
         await User.delete();
-        history.go(0);
+        history.replace('/');
     }
 
     const { enter, enterActive, exit, exitActive } = styles;
@@ -115,7 +120,7 @@ function Delete(props) {
 
 Delete.propTypes = {
     history: shape({
-        go: func.isRequired
+        replace: func.isRequired
     }).isRequired,
     className: string
 };

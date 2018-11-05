@@ -189,6 +189,7 @@ export default class Login extends React.Component {
                 &nbsp;Log in
             </button>
             <button
+                type="button"
                 disabled={loading}
                 onClick={onSignupClick}
             >
