@@ -71,12 +71,6 @@
             opacity: 1;
         }
 
-        .media-screen-sm({
-            position: fixed;
-            display: block;
-            top: @height-header-screen-sm;
-        });
-
         > * {
             border: none;
             border-bottom: @border;
@@ -84,5 +78,13 @@
             box-sizing: border-box;
         }
     }
+
+    .media-screen-sm({
+        position: unset;
+
+        .menu {
+            top: @height-header-screen-sm;
+        };
+    });
 }
 
