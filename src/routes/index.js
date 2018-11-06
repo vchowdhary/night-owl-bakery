@@ -8,6 +8,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 
 import ButtonLink from 'src/ButtonLink';
+import Counter from 'src/Counter';
 
 import styles from './index.less';
 
@@ -48,7 +49,7 @@ function Home() {
         </article>
         <article className={styles.cookieCounter}>
             <h1>
-                2,314
+                <Counter end={2314} />
             </h1>
         </article>
         <article>

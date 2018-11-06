@@ -36,6 +36,18 @@
             });
         }
     }
+
+    .counter {
+        margin-left: @spacing-x;
+
+        &:after {
+            content: ' cookies sold';
+
+            .media-screen-sm({
+                content: ' cookies';
+            });
+        }
+    }
 }
 
 

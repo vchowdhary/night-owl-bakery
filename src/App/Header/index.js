@@ -5,13 +5,14 @@
  */
 
 import React from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter, NavLink, Route } from 'react-router-dom';
 import Octicon, { Person } from '@githubprimer/octicons-react';
 
 import User from 'src/User';
 import Login from 'src/Login';
 import Logout from 'src/Logout';
 import ButtonLink from 'src/ButtonLink';
+import Counter from 'src/Counter';
 
 import DropdownNav from './DropdownNav';
 
@@ -35,6 +36,11 @@ function Logo() {
     >
         <div className={styles.image} />
         <div className={styles.text} />
+        <Route path="/" exact={true} render={() => {
+            return <h4 className={styles.counter}>
+                <Counter end={2314} />
+            </h4>;
+        }} />
     </NavLink>;
 }
 
