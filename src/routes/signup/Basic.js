@@ -45,10 +45,11 @@ function handleChange(onChange, key) {
 function SignupBasic(props) {
     const {
         disabled,
-        nameFirst = '',
-        nameLast = '',
-        phone = '',
-        zipCode = '',
+        isEmployee,
+        nameFirst,
+        nameLast,
+        phone,
+        zipCode,
         onChange
     } = props;
 
@@ -103,16 +104,34 @@ function SignupBasic(props) {
                 onChange={handleChange(onChange, 'zipCode')}
             />
         </div>
+        <LabeledInput
+            type="checkbox"
+            label="I am an employee"
+            disabled={disabled}
+            checked={isEmployee}
+            onChange={function(event) {
+                onChange('isEmployee', event.target.checked);
+            }}
+        />
     </form>;
 }
 
 SignupBasic.propTypes = {
     disabled: bool,
+    isEmployee: bool,
     nameFirst: string,
     nameLast: string,
     phone: string,
     zipCode: string,
     onChange: func.isRequired
+};
+
+SignupBasic.defaultProps = {
+    isEmployee: false,
+    nameFirst: '',
+    nameLast: '',
+    phone: '',
+    zipCode: ''
 };
 
 export default SignupBasic;

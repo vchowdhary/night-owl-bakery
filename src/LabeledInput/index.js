@@ -24,9 +24,12 @@ function LabeledInput(props) {
         [styles.required]: props.required
     });
 
+    const text = <span className={classes}>{label}</span>;
+    const input = <input placeholder={placeholder} {...rest} />;
+
     return <label className={styles.label}>
-        <span className={classes}>{label}</span>
-        <input placeholder={placeholder} {...rest} />
+        {text}
+        {input}
     </label>;
 }
 

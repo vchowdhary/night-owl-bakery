@@ -58,8 +58,8 @@ function SignupAccount(props) {
     const {
         disabled,
         message,
-        username = '',
-        password = '',
+        username,
+        password,
         onChange,
         onSubmit
     } = props;
@@ -118,6 +118,11 @@ SignupAccount.propTypes = {
     password: string,
     onSubmit: func,
     onChange: func.isRequired
+};
+
+SignupAccount.defaultProps = {
+    username: '',
+    password: ''
 };
 
 export default SignupAccount;

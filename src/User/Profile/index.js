@@ -120,6 +120,7 @@ class Profile extends React.Component {
         const {
             nameFirst,
             nameLast,
+            isEmployee,
             occupation,
             birthMonth,
             weekendActivity,
@@ -132,7 +133,7 @@ class Profile extends React.Component {
         } = profile;
 
         return <div className={styles.profile}>
-            <h1>{nameFirst} {nameLast}</h1>
+            <h1>{nameFirst} {nameLast} {isEmployee ? '(Employee)' : ''}</h1>
             <ul>
                 <li>Occupation: {occupation}</li>
                 <li>Birth month: {MONTHS[birthMonth - 1]}</li>

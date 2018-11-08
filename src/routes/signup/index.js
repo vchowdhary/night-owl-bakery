@@ -102,7 +102,7 @@ class Signup extends React.Component {
      *
      * @private
      * @param {string} key - The changed key.
-     * @param {string} value - The new value.
+     * @param {*} value - The new value.
      */
     onChange(key, value) {
         this.setState({ [key]: value });
