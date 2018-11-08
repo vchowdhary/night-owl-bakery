@@ -8,11 +8,12 @@
         white-space: pre-wrap;
     }
 
-    .danger {
-        display: flex;
-        flex-flow: column nowrap;
+    .matches {
+        font-size: smaller;
 
-        margin-top: 8 * @spacing-y;
+        > * {
+            margin-block-end: @spacing-y;
+        }
     }
 }
 

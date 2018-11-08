@@ -5,17 +5,19 @@
  */
 
 import React from 'react';
-import { string } from 'prop-types';
+import { string, node } from 'prop-types';
 
 import XHRpromise from 'src/XHRpromise';
 import Spinner from 'src/Spinner';
-import Delete from 'src/User/Delete';
+import User from 'src/User';
 
 import styles from './index.less';
 
 /**
  * Calendar months.
  *
+ * @private
+ * @readonly
  * @type {string[]}
  */
 const MONTHS = Object.freeze([
@@ -34,6 +36,58 @@ const MONTHS = Object.freeze([
 ]);
 
 /**
+ * Profile attributes.
+ *
+ * @private
+ * @readonly
+ * @enum {Object}
+ */
+const ATTRS = Object.freeze({
+    occupation: {
+        desc: 'Occupation'
+    },
+    birthMonth: {
+        desc: 'Birth month'
+    },
+    weekendActivity: {
+        desc: 'Favorite weekend activity'
+    },
+    favoriteFood: {
+        desc: 'Favorite food'
+    },
+    likeToWatch: {
+        desc: 'Likes to watch'
+    },
+    pittsburghFavorite: {
+        desc: 'Favorite thing about Pittsburgh'
+    },
+    origin: {
+        desc: 'From'
+    },
+    lifeMotto: {
+        desc: 'Life motto'
+    }
+});
+
+/**
+ * Profile attribute.
+ *
+ * @param {Object} props - The component's props.
+ * @param {string} props.desc - Description of the attribute.
+ * @param {ReactNode} props.children - The value to display.
+ * @returns {ReactElement} The component's elements.
+ */
+function ProfileAttr(props) {
+    const { desc, children } = props;
+    return <li>{desc}: {children}</li>;
+}
+
+ProfileAttr.propTypes = {
+    desc: string,
+    children: node
+};
+
+/**
  * User profile.
  */
 class Profile extends React.Component {
@@ -46,7 +100,8 @@ class Profile extends React.Component {
         this.state = {
             loading: true,
             error: null,
-            profile: null
+            profile: null,
+            matchIDs: null
         };
     }
 
@@ -67,7 +122,41 @@ class Profile extends React.Component {
             });
 
             const profile = JSON.parse(response);
+            if ('birthMonth' in profile) {
+                profile.birthMonth = MONTHS[profile.birthMonth - 1];
+            }
             this.setState({ profile });
+        } catch (error) {
+            this.setState({ error });
+        } finally {
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+     * Refreshes match IDs.
+     *
+     * @returns {void} Resolves when the refresh has completed.
+     */
+    async refreshMatchIDs() {
+        const { id } = this.props;
+        const { profile } = this.state;
+
+        if (User.id !== id || !profile || profile.isEmployee) {
+            // Cannot have matches if not logged in or is an employee.
+            this.setState({ matchIDs: null });
+            return;
+        }
+
+        this.setState({ loading: true });
+
+        try {
+            const { response } = await XHRpromise('GET', '/api/match', {
+                successStatus: 200
+            });
+
+            const matchIDs = JSON.parse(response);
+            this.setState({ matchIDs });
         } catch (error) {
             this.setState({ error });
         } finally {
@@ -84,6 +173,7 @@ class Profile extends React.Component {
         }
 
         await this.refreshProfile();
+        await this.refreshMatchIDs();
     }
 
     /**
@@ -97,6 +187,7 @@ class Profile extends React.Component {
         }
 
         await this.refreshProfile();
+        await this.refreshMatchIDs();
     }
 
     /**
@@ -105,7 +196,7 @@ class Profile extends React.Component {
      * @returns {ReactElement} The component's elements.
      */
     render() {
-        const { loading, error, profile } = this.state;
+        const { loading, error, profile, matchIDs } = this.state;
         if (loading) {
             return <Spinner />;
         }
@@ -121,34 +212,38 @@ class Profile extends React.Component {
             nameFirst,
             nameLast,
             isEmployee,
-            occupation,
-            birthMonth,
-            weekendActivity,
-            favoriteFood,
-            likeToWatch,
-            pittsburghFavorite,
-            origin,
-            lifeMotto,
-            bio
+            bio,
+            ...profileAttrs
         } = profile;
 
+        const attrs = Object.keys(ATTRS).map(function(key) {
+            const attr = profileAttrs[key];
+            if (!attr) {
+                return;
+            }
+
+            return <ProfileAttr key={key} {...ATTRS[key]}>
+                {attr}
+            </ProfileAttr>;
+        });
+
+        const matches = matchIDs
+            ? matchIDs.map(id => {
+                return <li key={id}>
+                    <Profile key={id} id={id} />
+                </li>;
+            })
+            : null;
+
         return <div className={styles.profile}>
-            <h1>{nameFirst} {nameLast} {isEmployee ? '(Employee)' : ''}</h1>
-            <ul>
-                <li>Occupation: {occupation}</li>
-                <li>Birth month: {MONTHS[birthMonth - 1]}</li>
-                <li>Favorite weekend activity: {weekendActivity}</li>
-                <li>Favorite food: {favoriteFood}</li>
-                <li>Likes to watch: {likeToWatch}</li>
-                <li>Favorite thing about Pittsburgh: {pittsburghFavorite}</li>
-                <li>From: {origin}</li>
-                <li>Life motto: &quot;{lifeMotto}&quot;</li>
-            </ul>
-            <h3>About me</h3>
-            <p className={styles.bio}>{bio}</p>
-            <div className={styles.danger}>
-                <Delete className={styles.delete} />
-            </div>
+            <h2 className={styles.title}>
+                {nameFirst} {nameLast} {isEmployee ? '(Employee)' : ''}
+            </h2>
+            <ul>{attrs}</ul>
+            {bio && <h3>About me</h3>}
+            {bio && <p className={styles.bio}>{bio}</p>}
+            {matches && <h3>Matches</h3>}
+            {matches && <ol className={styles.matches}>{matches}</ol>}
         </div>;
     }
 }
