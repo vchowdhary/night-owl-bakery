@@ -46,7 +46,8 @@ class Signup extends React.Component {
             redirect,
             message: null,
             username,
-            password
+            password,
+            likert: {}
         };
 
         [

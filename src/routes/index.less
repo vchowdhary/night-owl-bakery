@@ -11,8 +11,8 @@
 div.home {
     display: flex;
     flex-flow: column nowrap;
-    max-width: unset;
-    margin: 0;
+    max-width: 100%;
+    padding: 0;
 
     > * {
         display: flex;
@@ -24,6 +24,10 @@ div.home {
 
         > * {
             max-width: @width-container-max;
+
+            .media-screen-md({
+                max-width: 100%;
+            });
         }
     }
 

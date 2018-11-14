@@ -195,7 +195,12 @@ button[type=submit], input[type=submit] {
         > * {
             flex: 1;
             max-width: @width-container-max;
-            margin: @spacing-y @spacing-x;
+            padding: @spacing-y @spacing-x;
+            box-sizing: border-box;
+
+            .media-screen-md({
+                max-width: 100%;
+            });
         }
     }
 }

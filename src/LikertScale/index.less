@@ -1,0 +1,54 @@
+@import '~src/definitions';
+
+.likertScale {
+    overflow-x: auto;
+
+    > table {
+        width: 100%;
+        border: none;
+
+        tr {
+            height: 100%;
+
+            > th, > td {
+                height: 100%;
+
+                padding: 0;
+                text-align: center;
+
+                &:first-child {
+                    text-align: right;
+                }
+
+                &.text {
+                    padding: @spacing-y @spacing-x;
+                }
+
+                > label {
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+
+                    transition: background-color @duration-transition;
+
+                    &:hover {
+                        background-color: @color-bg-hover;
+                    }
+
+                    &:focus, &:active, &.checked {
+                        background-color: @color-bg-active;
+                    }
+                }
+            }
+        }
+
+        tbody > tr:nth-child(odd) {
+            background-color: contrast(
+            @color-bg,
+            darken(@color-bg, 10%),
+            lighten(@color-bg, 10%)
+            );
+        }
+    }
+}
+

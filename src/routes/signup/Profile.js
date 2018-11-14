@@ -5,9 +5,9 @@
  */
 
 import React from 'react';
-import { bool, string, func } from 'prop-types';
+import { bool, object, func } from 'prop-types';
 
-import LabeledInput from 'src/LabeledInput';
+import LikertScale from 'src/LikertScale';
 
 import logoImage from 'public/images/logo-notext.svg';
 
@@ -18,7 +18,7 @@ import logoImage from 'public/images/logo-notext.svg';
  * @readonly
  * @type {number}
  */
-const TEXT_MAXLEN = 255;
+// const TEXT_MAXLEN = 255;
 
 /**
  * Maximum text area field length.
@@ -27,79 +27,43 @@ const TEXT_MAXLEN = 255;
  * @readonly
  * @type {number}
  */
-const TEXTAREA_MAXLEN = 2047;
+// const TEXTAREA_MAXLEN = 2047;
 
 /**
- * Form fields.
+ * Likert scale questions.
  *
  * @private
  * @readonly
  * @type {Object[]}
  */
-const FIELDS = Object.freeze([{
-    name: 'occupation',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'My occupation is',
-    placeholder: 'student'
-}, {
-    name: 'birthMonth',
-    type: 'number',
-    min: 1,
-    max: 12,
-    label: 'The month of my birth is',
-    placeholder: '12'
-}, {
-    name: 'weekendActivity',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'My favorite thing to do on the weekend is',
-    placeholder: 'reading'
-}, {
-    name: 'favoriteFood',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'I like to eat',
-    placeholder: 'cookies'
-}, {
-    name: 'likeToWatch',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'I like to watch',
-    placeholder: 'Game of Thrones'
-}, {
-    name: 'pittsburghFavorite',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'My favorite thing about Pittsburgh is',
-    placeholder: 'the weather'
-}, {
-    name: 'origin',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'I\'m from',
-    placeholder: 'Pittsburgh'
-}, {
-    name: 'lifeMotto',
-    type: 'text',
-    maxLength: TEXT_MAXLEN,
-    label: 'My life motto is',
-    placeholder: 'my heart is in the work'
-}]);
-
-/**
- * Creates a change handler for the given key.
- *
- * @private
- * @param {Function} onChange - The handler to call.
- * @param {string} key - The key.
- * @returns {Function} The wrapped change handler.
- */
-function handleChange(onChange, key) {
-    return function(event) {
-        onChange(key, event.target.value);
-    };
-}
+const LIKERTS = [{
+    title: 'I value...',
+    questions: [{
+        name: 'valuesFriendship',
+        label: 'Friendship'
+    }, {
+        name: 'valuesFamily',
+        label: 'Family'
+    }, {
+        name: 'valuesCommunity',
+        label: 'Community'
+    }, {
+        name: 'valuesSelf',
+        label: 'Self'
+    }, {
+        name: 'valuesFaith',
+        label: 'Faith'
+    }, {
+        name: 'valuesEducation',
+        label: 'Education'
+    }, {
+        name: 'valuesHealth',
+        label: 'Health'
+    }, {
+        name: 'valuesStrength',
+        label: 'Strength'
+    }]
+}];
 
 /**
  * Profile form.
@@ -110,14 +74,30 @@ function handleChange(onChange, key) {
  * @returns {ReactElement} The component's elements.
  */
 function SignupProfile(props) {
-    const { disabled, onChange } = props;
+    const {
+        disabled,
+        onChange,
+        likert
+    } = props;
 
-    const inputs = FIELDS.map(function({ name, ...rest }) {
-        return <LabeledInput
-            key={name}
+    /**
+     * Handles a Likert scale input change.
+     *
+     * @param {string} name - The input's name.
+     * @param {number} value - The new value.
+     */
+    function onLikertChange(name, value) {
+        likert[name] = value;
+        onChange('likert', likert);
+    }
+
+    const likertScales = LIKERTS.map(function(scaleProps, i) {
+        return <LikertScale
+            key={i}
             disabled={disabled}
-            onChange={handleChange(onChange, name)}
-            {...rest}
+            onChange={onLikertChange}
+            values={likert}
+            {...scaleProps}
         />;
     });
 
@@ -132,23 +112,15 @@ function SignupProfile(props) {
                 </h5>
             </div>
         </section>
-        {inputs}
-        <h4>Tell us more about yourself:</h4>
-        <textarea
-            maxLength={TEXTAREA_MAXLEN}
-            onChange={handleChange(onChange, 'bio')}
-        />
+        {likertScales}
     </form>;
 }
 
 SignupProfile.propTypes = {
     disabled: bool,
-    onChange: func.isRequired
+    onChange: func.isRequired,
+    likert: object.isRequired
 };
-
-FIELDS.forEach(function({ name }) {
-    SignupProfile.propTypes[name] = string;
-});
 
 export default SignupProfile;
 
