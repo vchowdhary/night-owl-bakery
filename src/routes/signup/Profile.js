@@ -19,8 +19,9 @@ import logoImage from 'public/images/logo-notext.svg';
  * @type {Object[]}
  */
 const LIKERTS = [{
-    title: <h4>What are your most important values?</h4>,
-    scale: [
+    title: 'What are your most important values?',
+    scale: [1, 2, 3, 4, 5],
+    legend: [
         'Least important',
         '',
         'Somewhat important',
@@ -122,13 +123,18 @@ function SignupProfile(props) {
     }
 
     const likertScales = LIKERTS.map(function(scaleProps, i) {
-        return <ScaleInputGroup
-            key={i}
-            disabled={disabled}
-            onChange={onLikertChange}
-            values={likert}
-            {...scaleProps}
-        />;
+        const { title, ...rest } = scaleProps;
+
+        return [
+            <h4 key='title'>{title}</h4>,
+            <ScaleInputGroup
+                key={i}
+                disabled={disabled}
+                onChange={onLikertChange}
+                values={likert}
+                {...rest}
+            />
+        ];
     });
 
 
@@ -142,16 +148,18 @@ function SignupProfile(props) {
             max
         ];
 
-        return <ScaleInput
-            key={name}
-            title={<h4>{title}</h4>}
-            name={name}
-            value={semDiff[name]}
-            scale={scale}
-            disabled={disabled}
-            onChange={onSemDiffChange}
-            {...rest}
-        />;
+        return [
+            <p key='title'>{title}</p>,
+            <ScaleInput
+                key={name}
+                name={name}
+                value={semDiff[name]}
+                scale={scale}
+                disabled={disabled}
+                onChange={onSemDiffChange}
+                {...rest}
+            />
+        ];
     });
 
     return <form>

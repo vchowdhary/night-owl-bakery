@@ -24,7 +24,6 @@ function ScaleInputRow(props) {
         name,
         value,
         scale,
-        showScale,
         disabled,
         label,
         onChange
@@ -41,15 +40,14 @@ function ScaleInputRow(props) {
     const cols = scale.map(function(scaleName, i) {
         const radioValue = i + 1;
         const checked = (radioValue === value);
-        const text = showScale && <span className={styles.text}>
-            {scaleName}
-        </span>;
 
         return <td key={radioValue}>
             <label className={classNames({
                 [styles.checked]: checked
             })}>
-                {text}
+                <span className={styles.text}>
+                    {scaleName}
+                </span>
                 <input
                     type="radio"
                     name={name}
@@ -63,7 +61,7 @@ function ScaleInputRow(props) {
     });
 
     return <tr>
-        {label && <td className={styles.text}>{label}</td>}
+        {label && <th className={styles.text}>{label}</th>}
         {cols}
     </tr>;
 }
@@ -72,7 +70,6 @@ ScaleInputRow.propTypes = {
     name: string.isRequired,
     value: number,
     scale: arrayOf(string),
-    showScale: bool,
     disabled: bool,
     label: node,
     onChange: func
@@ -87,8 +84,8 @@ ScaleInputRow.propTypes = {
  */
 function ScaleInputGroup(props) {
     const {
-        title,
         questions,
+        legend,
         scale,
         values,
         disabled,
@@ -109,19 +106,18 @@ function ScaleInputGroup(props) {
         />;
     });
 
-    const scaleCols = scale.map(function(scaleName, i) {
+    const legendCols = legend.map(function(legendName, i) {
         return <th key={i} className={styles.text}>
-            {scaleName}
+            {legendName}
         </th>;
     });
 
     return <div className={styles.scaleInput}>
-        {title}
         <table>
             <thead>
                 <tr>
                     <th />
-                    {scaleCols}
+                    {legendCols}
                 </tr>
             </thead>
             <tbody>
@@ -132,11 +128,11 @@ function ScaleInputGroup(props) {
 }
 
 ScaleInputGroup.propTypes = {
-    title: node,
     questions: arrayOf(shape({
         name: string.isRequired,
         label: node
     })).isRequired,
+    legend: arrayOf(string),
     scale: arrayOf(string).isRequired,
     values: object.isRequired,
     disabled: bool,
@@ -151,23 +147,16 @@ ScaleInputGroup.propTypes = {
  * @returns {ReactElement} The component's elements.
  */
 function ScaleInput(props) {
-    const { title } = props;
-
     return <div className={styles.scaleInput}>
-        { title }
         <table>
             <tbody>
-                <ScaleInputRow
-                    showScale={true}
-                    {...props}
-                />
+                <ScaleInputRow {...props} />
             </tbody>
         </table>
     </div>;
 }
 
 ScaleInput.propTypes = {
-    title: node,
     name: string.isRequired,
     value: number,
     scale: arrayOf(string).isRequired,

@@ -9,52 +9,55 @@
         border-spacing: 0;
         table-layout: fixed;
 
-        .text {
-            padding: @spacing-y @spacing-x;
-        }
+        .media-screen-md({
+            table-layout: unset;
+        });
 
         tr {
+            position: relative;
             height: 100%;
+
+            .text {
+                padding: @spacing-y @spacing-x;
+            }
 
             > th, > td {
                 height: 100%;
-
-                padding: 0;
                 text-align: center;
+            }
 
-                &:first-child {
-                    text-align: right;
+            > td > label {
+                display: flex;
+                justify-content: center;
+
+                height: 100%;
+
+                > .text {
+                    white-space: nowrap;
+                    min-width: 4 * @spacing-x;
+
+                    transition-property: color, background-color;
+                    transition-duration: @duration-transition;
                 }
 
-                > label {
-                    height: 100%;
-                    display: flex;
-                    flex-flow: column nowrap;
-                    justify-content: center;
-                    text-align: center;
-
-                    transition: background-color @duration-transition;
-
-                    &:hover {
-                        background-color: @color-bg-hover;
+                &:hover, &:focus, &:active, &.checked {
+                    > .text {
+                        color: @color-bg;
+                        background-color: @color-text;
                     }
+                }
 
-                    &:focus, &:active, &.checked {
-                        background-color: @color-bg-active;
-                    }
+                > input[type=radio] {
+                    display: none;
                 }
             }
         }
 
-        tbody > tr:only-child > td > label > input[type=radio] {
-            display: none;
-        }
-
         tbody > tr:nth-child(odd) {
             background-color: contrast(
-            @color-bg,
-            darken(@color-bg, 10%),
-            lighten(@color-bg, 10%)
+                @color-bg,
+                darken(@color-bg, 10%),
+                lighten(@color-bg, 10%)
             );
         }
     }
