@@ -12,24 +12,6 @@ import LikertScale from 'src/LikertScale';
 import logoImage from 'public/images/logo-notext.svg';
 
 /**
- * Maximum text field length.
- *
- * @private
- * @readonly
- * @type {number}
- */
-// const TEXT_MAXLEN = 255;
-
-/**
- * Maximum text area field length.
- *
- * @private
- * @readonly
- * @type {number}
- */
-// const TEXTAREA_MAXLEN = 2047;
-
-/**
  * Likert scale questions.
  *
  * @private

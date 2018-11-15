@@ -47,7 +47,9 @@ class Signup extends React.Component {
             message: null,
             username,
             password,
-            likert: {}
+            likert: {},
+            semDiff: {},
+            openResp: {}
         };
 
         [
