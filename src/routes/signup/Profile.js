@@ -7,9 +7,25 @@
 import React from 'react';
 import { bool, object, func } from 'prop-types';
 
-import LikertScale from 'src/LikertScale';
+import ScaleInput from 'src/ScaleInput';
 
 import logoImage from 'public/images/logo-notext.svg';
+
+/**
+ * Conversion from Likert scale values to names.
+ *
+ * @private
+ * @readonly
+ * @type {string[]}
+ */
+const SCALE_LIKERT = [
+    'N/A',
+    'Strongly disagree',
+    'Disagree',
+    'Neutral',
+    'Agree',
+    'Strongly agree'
+];
 
 /**
  * Likert scale questions.
@@ -74,11 +90,12 @@ function SignupProfile(props) {
     }
 
     const likertScales = LIKERTS.map(function(scaleProps, i) {
-        return <LikertScale
+        return <ScaleInput
             key={i}
             disabled={disabled}
             onChange={onLikertChange}
             values={likert}
+            scale={SCALE_LIKERT}
             {...scaleProps}
         />;
     });
