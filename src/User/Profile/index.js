@@ -14,28 +14,6 @@ import User from 'src/User';
 import styles from './index.less';
 
 /**
- * Calendar months.
- *
- * @private
- * @readonly
- * @type {string[]}
- */
-const MONTHS = Object.freeze([
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-]);
-
-/**
  * Profile attributes.
  *
  * @private
@@ -43,29 +21,8 @@ const MONTHS = Object.freeze([
  * @enum {Object}
  */
 const ATTRS = Object.freeze({
-    occupation: {
-        desc: 'Occupation'
-    },
-    birthMonth: {
-        desc: 'Birth month'
-    },
-    weekendActivity: {
-        desc: 'Favorite weekend activity'
-    },
-    favoriteFood: {
-        desc: 'Favorite food'
-    },
-    likeToWatch: {
-        desc: 'Likes to watch'
-    },
-    pittsburghFavorite: {
-        desc: 'Favorite thing about Pittsburgh'
-    },
     origin: {
         desc: 'From'
-    },
-    lifeMotto: {
-        desc: 'Life motto'
     }
 });
 
@@ -122,9 +79,6 @@ class Profile extends React.Component {
             });
 
             const profile = JSON.parse(response);
-            if ('birthMonth' in profile) {
-                profile.birthMonth = MONTHS[profile.birthMonth - 1];
-            }
             this.setState({ profile });
         } catch (error) {
             this.setState({ error });

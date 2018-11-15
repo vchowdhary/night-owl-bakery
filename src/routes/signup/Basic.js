@@ -50,6 +50,7 @@ function SignupBasic(props) {
         nameLast,
         phone,
         zipCode,
+        origin,
         onChange
     } = props;
 
@@ -85,6 +86,27 @@ function SignupBasic(props) {
         </div>
         <div role="group">
             <LabeledInput
+                type="text"
+                label="ZIP code"
+                placeholder="15224"
+                pattern="^\d{5}(?:-\d{4})?$"
+                maxLength={TEXT_MAXLEN}
+                disabled={disabled}
+                value={zipCode}
+                onChange={handleChange(onChange, 'zipCode')}
+            />
+            <LabeledInput
+                type="text"
+                label="I'm from"
+                placeholder="Garfield"
+                maxLength={TEXT_MAXLEN}
+                disabled={disabled}
+                value={origin}
+                onChange={handleChange(onChange, 'origin')}
+            />
+        </div>
+        <div role="group">
+            <LabeledInput
                 type="tel"
                 label="Phone #"
                 placeholder="123-456-7890"
@@ -94,25 +116,15 @@ function SignupBasic(props) {
                 onChange={handleChange(onChange, 'phone')}
             />
             <LabeledInput
-                type="text"
-                label="ZIP code"
-                placeholder="15222"
-                pattern="^\d{5}(?:-\d{4})?$"
-                maxLength={TEXT_MAXLEN}
+                type="checkbox"
+                label="I am an employee"
                 disabled={disabled}
-                value={zipCode}
-                onChange={handleChange(onChange, 'zipCode')}
+                checked={isEmployee}
+                onChange={function(event) {
+                    onChange('isEmployee', event.target.checked);
+                }}
             />
         </div>
-        <LabeledInput
-            type="checkbox"
-            label="I am an employee"
-            disabled={disabled}
-            checked={isEmployee}
-            onChange={function(event) {
-                onChange('isEmployee', event.target.checked);
-            }}
-        />
     </form>;
 }
 
@@ -123,6 +135,7 @@ SignupBasic.propTypes = {
     nameLast: string,
     phone: string,
     zipCode: string,
+    origin: string,
     onChange: func.isRequired
 };
 
@@ -131,7 +144,8 @@ SignupBasic.defaultProps = {
     nameFirst: '',
     nameLast: '',
     phone: '',
-    zipCode: ''
+    zipCode: '',
+    origin: ''
 };
 
 export default SignupBasic;

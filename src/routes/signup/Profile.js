@@ -12,6 +12,15 @@ import { Group as ScaleInputGroup } from 'src/ScaleInput';
 import logoImage from 'public/images/logo-notext.svg';
 
 /**
+ * Maximum text area length, in bytes.
+ *
+ * @private
+ * @readonly
+ * @type {number}
+ */
+const TEXTAREA_MAXLEN = 2047;
+
+/**
  * Likert scale questions.
  *
  * @private
@@ -167,6 +176,14 @@ function SignupProfile(props) {
             disabled={disabled}
             onChange={onSemDiffChange}
             values={semDiff}
+        />
+        <h4>Tell us more about yourself:</h4>
+        <textarea
+            maxLength={TEXTAREA_MAXLEN}
+            placeholder="Anything else to share?"
+            onChange={function(event) {
+                onChange('bio', event.target.value);
+            }}
         />
     </form>;
 }
