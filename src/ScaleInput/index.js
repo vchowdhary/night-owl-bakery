@@ -23,8 +23,8 @@ function ScaleInputRow(props) {
     const {
         name,
         value,
-        valueMin,
-        valueMax,
+        scale,
+        showScale,
         disabled,
         label,
         onChange
@@ -38,15 +38,18 @@ function ScaleInputRow(props) {
         };
     }
 
-    const cols = new Array(valueMax - valueMin + 1);
-    for (let i = 0; i < valueMax; i++) {
-        const radioValue = valueMin + i;
+    const cols = scale.map(function(scaleName, i) {
+        const radioValue = i + 1;
         const checked = (radioValue === value);
+        const text = showScale && <span className={styles.text}>
+            {scaleName}
+        </span>;
 
-        cols[i] = <td key={radioValue}>
+        return <td key={radioValue}>
             <label className={classNames({
                 [styles.checked]: checked
             })}>
+                {text}
                 <input
                     type="radio"
                     name={name}
@@ -57,10 +60,10 @@ function ScaleInputRow(props) {
                 />
             </label>
         </td>;
-    }
+    });
 
     return <tr>
-        <td className={styles.text}>{label}</td>
+        {label && <td className={styles.text}>{label}</td>}
         {cols}
     </tr>;
 }
@@ -68,21 +71,21 @@ function ScaleInputRow(props) {
 ScaleInputRow.propTypes = {
     name: string.isRequired,
     value: number,
-    valueMin: number.isRequired,
-    valueMax: number.isRequired,
+    scale: arrayOf(string),
+    showScale: bool,
     disabled: bool,
-    label: string.isRequired,
+    label: node,
     onChange: func
 };
 
 /**
- * Scale-based input component.
+ * Scale-based input group component.
  *
- * @alias module:src/ScaleInput
+ * @alias module:src/ScaleInput.Group
  * @param {Object} props - The component's props.
  * @returns {ReactElement} The component's elements.
  */
-function ScaleInput(props) {
+function ScaleInputGroup(props) {
     const {
         title,
         questions,
@@ -92,9 +95,6 @@ function ScaleInput(props) {
         onChange
     } = props;
 
-    const valueMin = 1;
-    const valueMax = scale.length - 1;
-
     const questionRows = questions.map(function(rowProps) {
         const { name, label } = rowProps;
 
@@ -102,26 +102,25 @@ function ScaleInput(props) {
             key={name}
             name={name}
             value={values[name]}
-            valueMin={valueMin}
-            valueMax={valueMax}
+            scale={scale}
             disabled={disabled}
             label={label}
             onChange={onChange}
         />;
     });
 
-    const scaleCols = new Array(valueMax - valueMin - 1);
-    for (let i = valueMin; i <= valueMax; i++) {
-        scaleCols[i] = <th key={i} className={styles.text}>
-            {scale[i]}
+    const scaleCols = scale.map(function(scaleName, i) {
+        return <th key={i} className={styles.text}>
+            {scaleName}
         </th>;
-    }
+    });
 
-    return <div className={styles.likertScale}>
+    return <div className={styles.scaleInput}>
+        {title}
         <table>
             <thead>
                 <tr>
-                    <th className={styles.text}>{title}</th>
+                    <th />
                     {scaleCols}
                 </tr>
             </thead>
@@ -132,17 +131,52 @@ function ScaleInput(props) {
     </div>;
 }
 
-ScaleInput.propTypes = {
+ScaleInputGroup.propTypes = {
     title: node,
     questions: arrayOf(shape({
         name: string.isRequired,
-        label: string.isRequired
+        label: node
     })).isRequired,
     scale: arrayOf(string).isRequired,
     values: object.isRequired,
     disabled: bool,
     onChange: func
 };
+
+/**
+ * Scale input component.
+ *
+ * @private
+ * @param {Object} props - The component's props.
+ * @returns {ReactElement} The component's elements.
+ */
+function ScaleInput(props) {
+    const { title } = props;
+
+    return <div className={styles.scaleInput}>
+        { title }
+        <table>
+            <tbody>
+                <ScaleInputRow
+                    showScale={true}
+                    {...props}
+                />
+            </tbody>
+        </table>
+    </div>;
+}
+
+ScaleInput.propTypes = {
+    title: node,
+    name: string.isRequired,
+    value: number,
+    scale: arrayOf(string).isRequired,
+    disabled: bool,
+    label: node,
+    onChange: func
+};
+
+export { ScaleInputGroup as Group };
 
 export default ScaleInput;
 

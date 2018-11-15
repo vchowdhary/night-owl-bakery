@@ -1,11 +1,17 @@
 @import '~src/definitions';
 
-.likertScale {
+.scaleInput {
     overflow-x: auto;
 
     > table {
         width: 100%;
         border: none;
+        border-spacing: 0;
+        table-layout: fixed;
+
+        .text {
+            padding: @spacing-y @spacing-x;
+        }
 
         tr {
             height: 100%;
@@ -20,14 +26,12 @@
                     text-align: right;
                 }
 
-                &.text {
-                    padding: @spacing-y @spacing-x;
-                }
-
                 > label {
                     height: 100%;
                     display: flex;
+                    flex-flow: column nowrap;
                     justify-content: center;
+                    text-align: center;
 
                     transition: background-color @duration-transition;
 
@@ -40,6 +44,10 @@
                     }
                 }
             }
+        }
+
+        tbody > tr:only-child > td > label > input[type=radio] {
+            display: none;
         }
 
         tbody > tr:nth-child(odd) {
