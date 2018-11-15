@@ -17,8 +17,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2, h3 {
     margin: @spacing-y 0 2 * @spacing-y;
-    margin-block-start: 0;
-    margin-block-end: 0;
 
     .media-screen-md({
         text-align: center;
@@ -38,7 +36,7 @@ form {
     box-sizing: border-box;
 
     > *:not(:last-child) {
-        margin-block-end: @spacing-y;
+        margin-bottom: @spacing-y;
     }
 
     > div[role=group] {
@@ -46,14 +44,14 @@ form {
         flex-flow: row wrap;
         align-items: center;
 
-        margin-block-start: -@spacing-y;
-        margin-inline-start: -@spacing-x;
+        margin-top: -@spacing-y;
+        margin-left: -@spacing-x;
 
         > * {
             flex: 1;
 
-            margin-block-start: @spacing-y;
-            margin-inline-start: @spacing-x;
+            margin-top: @spacing-y;
+            margin-left: @spacing-x;
         }
     }
 }
