@@ -7,7 +7,7 @@
 import React from 'react';
 import { bool, object, func } from 'prop-types';
 
-import ScaleInput, { Group as ScaleInputGroup } from 'src/ScaleInput';
+import { Group as ScaleInputGroup } from 'src/ScaleInput';
 
 import logoImage from 'public/images/logo-notext.svg';
 
@@ -20,7 +20,7 @@ import logoImage from 'public/images/logo-notext.svg';
  */
 const LIKERTS = [{
     title: 'What are your most important values?',
-    scale: [1, 2, 3, 4, 5],
+    scale: ['1', '2', '3', '4', '5'],
     legend: [
         'Least important',
         '',
@@ -63,26 +63,37 @@ const LIKERTS = [{
  * @type {Object[]}
  */
 const SEMDIFF = [{
-    title: 'Dogs or cats?',
     name: 'dogCat',
+    label: 'Dogs or cats?',
     min: 'Dogs',
     max: 'Cats'
 }, {
-    title: 'Donuts or munchkins?',
     name: 'donutMunchkins',
+    label: 'Donuts or munchkins?',
     min: 'Donuts',
     max: 'Munchkins'
 }, {
-    title: 'Cake or pie?',
     name: 'cakePie',
+    label: 'Cake or pie?',
     min: 'Cake',
     max: 'Pie'
 }, {
-    title: 'Steelers or Pirates?',
     name: 'steelersPirates',
+    label: 'Steelers or Pirates?',
     min: 'Steelers',
     max: 'Pirates'
-}];
+}].map(function(config) {
+    const { min, max, ...rest } = config;
+    rest.scale = [
+        min,
+        '← Slightly',
+        'Neither',
+        'Slightly →',
+        max
+    ];
+
+    return rest;
+});
 
 /**
  * Profile form.
@@ -122,8 +133,8 @@ function SignupProfile(props) {
         onChange('semDiff', semDiff);
     }
 
-    const likertScales = LIKERTS.map(function(scaleProps, i) {
-        const { title, ...rest } = scaleProps;
+    const likertScales = LIKERTS.map(function(config, i) {
+        const { title, ...rest } = config;
 
         return [
             <h4 key='title'>{title}</h4>,
@@ -138,30 +149,6 @@ function SignupProfile(props) {
     });
 
 
-    const semDiffScales = SEMDIFF.map(function(scaleProps) {
-        const { title, name, min, max, ...rest } = scaleProps;
-        const scale = [
-            min,
-            '← Slightly',
-            'Neither',
-            'Slightly →',
-            max
-        ];
-
-        return [
-            <p key='title'>{title}</p>,
-            <ScaleInput
-                key={name}
-                name={name}
-                value={semDiff[name]}
-                scale={scale}
-                disabled={disabled}
-                onChange={onSemDiffChange}
-                {...rest}
-            />
-        ];
-    });
-
     return <form>
         <section>
             <img src={logoImage} />
@@ -175,7 +162,12 @@ function SignupProfile(props) {
         </section>
         {likertScales}
         <h4>For these questions, pick what you like more.</h4>
-        {semDiffScales}
+        <ScaleInputGroup
+            questions={SEMDIFF}
+            disabled={disabled}
+            onChange={onSemDiffChange}
+            values={semDiff}
+        />
     </form>;
 }
 

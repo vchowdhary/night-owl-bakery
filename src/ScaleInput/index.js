@@ -60,9 +60,14 @@ function ScaleInputRow(props) {
         </td>;
     });
 
+    const labelElem = label && <th className={styles.text}>
+        {label}
+    </th>;
+
     return <tr>
-        {label && <th className={styles.text}>{label}</th>}
+        {labelElem}
         {cols}
+        {labelElem}
     </tr>;
 }
 
@@ -99,27 +104,33 @@ function ScaleInputGroup(props) {
             key={name}
             name={name}
             value={values[name]}
-            scale={scale}
+            scale={rowProps.scale || scale}
             disabled={disabled}
             label={label}
             onChange={onChange}
         />;
     });
 
-    const legendCols = legend.map(function(legendName, i) {
-        return <th key={i} className={styles.text}>
-            {legendName}
-        </th>;
-    });
+    let legendElem;
+    if (legend) {
+        const legendCols = legend.map(function(legendName, i) {
+            return <th key={i} className={styles.text}>
+                {legendName}
+            </th>;
+        });
+
+        legendElem = <thead>
+            <tr>
+                <th />
+                {legendCols}
+                <th />
+            </tr>
+        </thead>;
+    }
 
     return <div className={styles.scaleInput}>
         <table>
-            <thead>
-                <tr>
-                    <th />
-                    {legendCols}
-                </tr>
-            </thead>
+            {legendElem}
             <tbody>
                 {questionRows}
             </tbody>
@@ -130,10 +141,11 @@ function ScaleInputGroup(props) {
 ScaleInputGroup.propTypes = {
     questions: arrayOf(shape({
         name: string.isRequired,
-        label: node
+        label: node,
+        scale: arrayOf(string)
     })).isRequired,
     legend: arrayOf(string),
-    scale: arrayOf(string).isRequired,
+    scale: arrayOf(string),
     values: object.isRequired,
     disabled: bool,
     onChange: func

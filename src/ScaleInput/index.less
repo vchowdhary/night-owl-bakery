@@ -7,30 +7,29 @@
         width: 100%;
         border: none;
         border-spacing: 0;
-        table-layout: fixed;
-
-        .media-screen-md({
-            table-layout: unset;
-        });
 
         tr {
-            position: relative;
-            height: 100%;
-
             .text {
                 padding: @spacing-y @spacing-x;
             }
 
+            > :first-child {
+                text-align: right;
+            }
+
+            > :last-child {
+                text-align: left;
+            }
+
             > th, > td {
-                height: 100%;
+                padding: 0;
+
                 text-align: center;
             }
 
             > td > label {
                 display: flex;
                 justify-content: center;
-
-                height: 100%;
 
                 > .text {
                     white-space: nowrap;
