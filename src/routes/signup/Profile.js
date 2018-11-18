@@ -73,32 +73,28 @@ const LIKERTS = [{
  */
 const SEMDIFF = [{
     name: 'dogCat',
-    label: 'Dogs or cats?',
     min: 'Dogs',
     max: 'Cats'
 }, {
     name: 'donutMunchkins',
-    label: 'Donuts or munchkins?',
     min: 'Donuts',
     max: 'Munchkins'
 }, {
     name: 'cakePie',
-    label: 'Cake or pie?',
     min: 'Cake',
     max: 'Pie'
 }, {
     name: 'steelersPirates',
-    label: 'Steelers or Pirates?',
     min: 'Steelers',
     max: 'Pirates'
 }].map(function(config) {
     const { min, max, ...rest } = config;
     rest.scale = [
-        min,
-        '← Slightly',
+        `Mostly ${min}`,
+        `Slightly ${min}`,
         'Neither',
-        'Slightly →',
-        max
+        `Slightly ${max}`,
+        `Mostly ${max}`
     ];
 
     return rest;
