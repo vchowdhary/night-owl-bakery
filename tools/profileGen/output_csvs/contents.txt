@@ -1,0 +1,3 @@
+File output files will be placed here. They will be CSVs with employer profiles,
+employee profiles, as well as a rating between every possible employer-employee
+pairing.
