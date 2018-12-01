@@ -11,7 +11,7 @@ model = pickle.load(open('data/model.pickle', 'rb'))
 employeeData = pd.read_csv(employeePath, sep=',')
 employeeData['merge'] = 1
 
-def match(employerPath, limit=10):
+def match(employerPath):
     employerData = pd.read_csv(employerPath, sep=',')
     employerData['merge'] = 1
     df = pd.merge(employerData, employeeData, on='merge')
@@ -34,10 +34,11 @@ def match(employerPath, limit=10):
 
     inputSamples = inputsMap.fit_transform(df)
 
-    result = pd.DataFrame({ 'id': df['id_y'] })
+    result = pd.DataFrame({
+        'id_x': df['id_x'],
+        'id_y': df['id_y']
+    })
     result['score'] = model.predict(inputSamples)
 
-    return result
-        .sort_values(by='score', ascending=False)
-        .truncate(after=limit)
+    return result.sort_values(by=['id_x', 'score'], ascending=False)
 

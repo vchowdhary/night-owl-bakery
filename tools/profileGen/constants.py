@@ -1,6 +1,6 @@
 # File directory constants
 NAMEFILE_DIR = "lib/";
-OUTPUT_DIR = "output_csvs/";
+OUTPUT_DIR = "../data/";
 
 ############################ User profile constants ############################
 ORIGINS = [
