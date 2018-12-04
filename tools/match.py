@@ -38,10 +38,13 @@ for employerData in employerDataReader:
 
     inputSamples = inputsMap.fit_transform(df)
 
-    result = pd.DataFrame({
+    result = pd.DataFrame(data={
         'id_y': df['id_y'],
         'score': model.predict(inputSamples)
-    }).sort_values(by=['score'], ascending=False)
+    });
+
+    result.sort_values(by=['score'], ascending=False, inplace=True);
+    result = result.head(5);
 
     sys.stdout.write(df['id_x'][0] + '\n')
     result.to_csv(sys.stdout, sep=',', header=False, index=False)
