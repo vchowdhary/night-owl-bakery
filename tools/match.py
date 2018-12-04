@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # match.py
 
+import sys
 import pickle
 import pandas as pd
 from sklearn_pandas import DataFrameMapper
@@ -11,11 +12,13 @@ model = pickle.load(open('data/model.pickle', 'rb'))
 employeeData = pd.read_csv(employeePath, sep=',')
 employeeData['merge'] = 1
 
-def match(employerPath):
-    employerData = pd.read_csv(employerPath, sep=',')
+employerDataReader = pd.read_csv(sys.stdin, sep=',', chunksize=1)
+
+for employerData in employerDataReader:
     employerData['merge'] = 1
     df = pd.merge(employerData, employeeData, on='merge')
     del df['merge']
+
     attrs = set(df.columns.values)
     ignoredAttrs = set([
         'id_x',
@@ -27,6 +30,7 @@ def match(employerPath):
         'origin_x',
         'origin_y'
     ])
+
     inputAttrs = list(attrs - ignoredAttrs)
     inputsMap = DataFrameMapper([
         (inputAttrs, None)
@@ -35,10 +39,10 @@ def match(employerPath):
     inputSamples = inputsMap.fit_transform(df)
 
     result = pd.DataFrame({
-        'id_x': df['id_x'],
-        'id_y': df['id_y']
-    })
-    result['score'] = model.predict(inputSamples)
+        'id_y': df['id_y'],
+        'score': model.predict(inputSamples)
+    }).sort_values(by=['score'], ascending=False)
 
-    return result.sort_values(by=['id_x', 'score'], ascending=False)
+    sys.stdout.write(df['id_x'][0] + '\n')
+    result.to_csv(sys.stdout, sep=',', header=False, index=False)
 

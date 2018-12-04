@@ -82,7 +82,7 @@ def main():
 
             firstName = names.getRandFirstName(maleNames, femaleNames);
             lastName = names.getRandLastName(lastNames);
-            userDict["nameLast"] = firstName;
+            userDict["nameFirst"] = firstName;
             userDict["nameLast"] = lastName;
             newID = names.getIdFromName(firstName, lastName, usedIDs);
             userDict["id"] = newID;
