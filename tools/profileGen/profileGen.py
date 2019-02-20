@@ -48,7 +48,7 @@ def main():
     headers = constants.HEADERS;
 
     # Generate employer profiles
-    with open(constants.OUTPUT_DIR + "employers.csv", "w", newline="") as csvfile:
+    with open(constants.OUTPUT_DIR + "employers.csv", "wb") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=headers);
         writer.writeheader();
 
@@ -73,7 +73,7 @@ def main():
         csvfile.close();
 
     # Generate employee profiles
-    with open(constants.OUTPUT_DIR + "employees.csv", "w", newline="") as csvfile:
+    with open(constants.OUTPUT_DIR + "employees.csv", "wb") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=headers);
         writer.writeheader();
 
@@ -98,7 +98,7 @@ def main():
         csvfile.close();
 
     # Generate employer-employee pairings + reviews
-    with open(constants.OUTPUT_DIR + "reviews.csv", "w", newline="") as csvfile:
+    with open(constants.OUTPUT_DIR + "reviews.csv", "wb") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=constants.MATCHING_HEADERS);
         writer.writeheader();
 

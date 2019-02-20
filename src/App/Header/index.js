@@ -38,7 +38,7 @@ function Logo() {
         <div className={styles.text} />
         <Route path="/" exact={true} render={() => {
             return <h4 className={styles.counter}>
-                <Counter end={2314} />
+                <Counter end={2000} />
             </h4>;
         }} />
     </NavLink>;
@@ -60,11 +60,15 @@ function Account() {
     let menu;
     if (User.loggedIn) {
         menu = [
+            <Logout key="logout" />,
             <ButtonLink key="profile" to="/profile/">
                 <Octicon icon={Person} />
                 &nbsp;My Profile
             </ButtonLink>,
-            <Logout key="logout" />
+            <ButtonLink key="map" to="/map/">
+                 <Octicon icon={Person} />
+                &nbsp; Map
+            </ButtonLink>
         ];
     } else {
         menu = [

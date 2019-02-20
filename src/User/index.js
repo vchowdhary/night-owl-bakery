@@ -24,7 +24,8 @@ const API = '/api/users/';
  */
 const UIPaths = {
     /** Login UI. */
-    login: '/login/'
+    login: '/login/',
+    map: '/map/'
 };
 Object.freeze(UIPaths);
 

@@ -39,10 +39,10 @@ def getLastNames():
 # Needs 2 lists, as the gender picking is random.
 def getRandFirstName(maleNames=None, femaleNames=None):
     if (maleNames == None or femaleNames == None):
-        maleNames = getFirstNames(MALE);
-        femaleNames = getFirstNames(FEMALE);
-    source = maleNames if random.randint(0,1) == MALE else femaleNames;
-    return random.choice(source);
+        maleNames = getFirstNames(MALE)
+        femaleNames = getFirstNames(FEMALE)
+    source = maleNames if random.randint(0,1) == MALE else femaleNames
+    return random.choice(source)
 
 # Returns a random last name. Source list is either given or defaulted to this
 # file's.
@@ -63,11 +63,11 @@ def getIdFromName(firstName, lastName, usedIDs=None):
     isDuplicate = True;
     while (isDuplicate):
         newID = firstName[0].lower();
-        newID += lastName[0:min(9, len(lastName))].lower();
-        newID += str(random.randint(0, 999));
+        newID += lastName[0:min(9, len(lastName))].lower()
+        newID += str(random.randint(0, 999))
         if (not usedIDs == None):
-            isDuplicate = newID in usedIDs;
+            isDuplicate = newID in usedIDs
         else:
-            isDuplicate = False;
+            isDuplicate = False
     return newID;
 
