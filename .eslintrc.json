@@ -139,7 +139,7 @@
                 "function": "Function"
             },
             "requireReturn": false,
-            "requireReturnType": true,
+            "requireReturnType": false,
             "matchDescription": ".+",
             "requireParamDescription": true,
             "requireReturnDescription": true

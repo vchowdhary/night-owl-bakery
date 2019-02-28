@@ -4,12 +4,12 @@
 # some random name.                                                            #
 ################################################################################
 
-import random;
-from constants import *;
+import random
+from constants import *
 
 # Defining some constants
-MALE = 0;
-FEMALE = 1;
+MALE = 0
+FEMALE = 1
 
 # Returns a list of first names, based on gender.
 def getFirstNames(gender):

@@ -7,7 +7,7 @@
 import React from 'react';
 import { func, boolean } from 'prop-types';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter,Switch, Route, Redirect } from 'react-router-dom';
 
 import asyncComponent from 'src/async-component';
 import Spinner from 'src/Spinner';

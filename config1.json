@@ -1,4 +1,5 @@
 {
     "dataPath": "/Users/vanshikachowdhary/Documents/GitHub/night-owl-bakery/data",
-    "cookieSecret": "asbihwleBF"
+    "cookieSecret": "asbihwleBF",
+    "port": 3600
 }

@@ -66,8 +66,8 @@ function Account() {
                 &nbsp;My Profile
             </ButtonLink>,
             <ButtonLink key="map" to="/map/">
-                 <Octicon icon={Person} />
-                &nbsp; Map
+                <Octicon icon={Person} />
+                &nbsp;Map
             </ButtonLink>
         ];
     } else {

@@ -5,6 +5,8 @@
  */
 
 import XHRpromise from 'src/XHRpromise';
+import Geolocation from 'src/Location';
+import Map from 'src/Map';
 
 /**
  * API base path.
@@ -55,7 +57,13 @@ class User {
              * @private
              * @type {Promise?}
              */
-            _refreshLoginStatusPromise: { value: null, writable: true }
+            _refreshLoginStatusPromise: { value: null, writable: true },
+            /**
+             * Location enabled
+             * @private
+             * @type {boolean}
+             */
+            _location: { value: null, writable: true }
         });
     }
 
@@ -155,6 +163,10 @@ class User {
         }
 
         this._id = id;
+        this._location = new Geolocation();
+        this._map = new Map();
+        this._location.enableLocationPermission(this._id);
+
         return this;
     }
 

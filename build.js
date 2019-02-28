@@ -59,7 +59,7 @@ switch (action) {
 
 const config = {
     hostname: 'localhost',
-    port: 8080,
+    port: 3000,
     staticPaths: [],
     middlewares: [
         require('webpack-dev-middleware')(webpackCompiler, {
