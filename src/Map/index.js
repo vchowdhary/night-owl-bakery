@@ -5,15 +5,21 @@ import React from 'react';
 import User from 'src/User';
 //import Geolocation from 'src/Location';
 import { string } from 'prop-types';
-import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+
+var watchId = 0;
 
 const MapComponent = withScriptjs(withGoogleMap(props => {
     return (
-        <GoogleMap 
-            defaultZoom={ 15 }
+        <GoogleMap
+            defaultZoom={ 20 }
             defaultCenter={{ lat: 21.1744336, lng: 72.7954677 }}
             center = { props.myLatLng }
-        />
+        >
+            <Marker
+                position = { props.myLatLng }
+            />
+        </GoogleMap>
     );
 }));
 
@@ -45,7 +51,7 @@ export default class Map extends React.Component {
      */
     showPosition() {
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(
+            watchId = navigator.geolocation.watchPosition(
                 position => {
                     this.setState(({
                         currentLatLng: {
@@ -65,6 +71,20 @@ export default class Map extends React.Component {
      */
     async componentWillMount(){
         this.showPosition();
+    }
+
+    /**
+     * Show position when component mounted
+     */
+    async componentDidMount(){
+        this.showPosition();
+    }
+
+    /**
+     * Clear the watch when leaving this page
+     */
+    async componentWillUnmount(){
+        navigator.geolocation.clearWatch(watchId);
     }
 
 

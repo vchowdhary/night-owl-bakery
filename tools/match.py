@@ -5,14 +5,18 @@ import sys
 import pickle
 import pandas as pd
 from sklearn_pandas import DataFrameMapper
+from dbmanager import Database
 
-employeePath = 'data/employees.csv'
+db = Database()
+db.createMatchTable()
+employeePath = '../data/employees.csv'
+employerPath = '../data/employers.csv'
 
-model = pickle.load(open('data/model.pickle', 'rb'))
+model = pickle.load(open('../data/model.pickle', 'rb'))
 employeeData = pd.read_csv(employeePath, sep=',')
 employeeData['merge'] = 1
 
-employerDataReader = pd.read_csv(sys.stdin, sep=',', chunksize=1)
+employerDataReader = pd.read_csv(employerPath, sep=',', chunksize=1)
 
 for employerData in employerDataReader:
     employerData['merge'] = 1
@@ -37,15 +41,27 @@ for employerData in employerDataReader:
     ])
 
     inputSamples = inputsMap.fit_transform(df)
+    #print(df)
 
     result = pd.DataFrame(data={
+        'id_x': df['id_x'],
         'id_y': df['id_y'],
         'score': model.predict(inputSamples)
     });
+    
+    id = 0
 
     result.sort_values(by=['score'], ascending=False, inplace=True);
-    result = result.head(5);
+    result = result.head(5)
 
-    sys.stdout.write(df['id_x'][0] + '\n')
-    result.to_csv(sys.stdout, sep=',', header=False, index=False)
+    for index, row in result.iterrows():
+       id += 1
+       print(row)
+       print(row[0])
+       print(row[1])
+       print(row[2])
+       db.insertMatchTable(id, row[0], row[1], row[2])
 
+  
+
+    

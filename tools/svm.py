@@ -9,11 +9,13 @@ from sklearn import metrics
 from sklearn_pandas import DataFrameMapper
 
 # Data file paths
-employerPath = 'data/employers.csv'
-employeePath = 'data/employees.csv'
-reviewPath = 'data/reviews.csv'
+print("Setting up data paths\n")
+employerPath = '../data/employers.csv'
+employeePath = '../data/employees.csv'
+reviewPath = '../data/reviews.csv'
 
 # Data file parsing
+print("Reading employer data")
 employerData = pd.read_csv(employerPath, sep=',', index_col='id')
 employeeData = pd.read_csv(employeePath, sep=',', index_col='id')
 reviewData = pd.read_csv(reviewPath, sep=',')
@@ -61,5 +63,5 @@ print((
     metrics.r2_score(outputSamples, predOutputs)
 ))
 
-pickle.dump(model, open('data/model.pickle', 'wb'))
+pickle.dump(model, open('../data/model.pickle', 'wb'))
 
