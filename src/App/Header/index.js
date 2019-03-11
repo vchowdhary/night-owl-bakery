@@ -68,6 +68,10 @@ function Account() {
             <ButtonLink key="map" to="/map/">
                 <Octicon icon={Person} />
                 &nbsp;Map
+            </ButtonLink>,
+            <ButtonLink key = "match" to= "/match/">
+                <Octicon icon = {Person} />
+                &nbsp;Make a Request
             </ButtonLink>
         ];
     } else {

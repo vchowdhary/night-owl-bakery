@@ -22,6 +22,7 @@ for employerData in employerDataReader:
     employerData['merge'] = 1
     df = pd.merge(employerData, employeeData, on='merge')
     del df['merge']
+    
 
     attrs = set(df.columns.values)
     ignoredAttrs = set([
@@ -41,7 +42,7 @@ for employerData in employerDataReader:
     ])
 
     inputSamples = inputsMap.fit_transform(df)
-    #print(df)
+    print(inputSamples)
 
     result = pd.DataFrame(data={
         'id_x': df['id_x'],
